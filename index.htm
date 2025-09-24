@@ -9,8 +9,8 @@
   <style>
     /* Full-screen calendar container */
     .calendar-container {
-      width: 100vw;       /* 100% of viewport width */
-      height: 100vh;      /* 100% of viewport height */
+      width: 100vw;
+      height: 100vh;
       margin: 0;
       padding: 0;
       box-sizing: border-box;
@@ -25,13 +25,13 @@
       height: 100%;
       max-width: 100%;
       max-height: 100%;
-      padding: 10px; /* optional inner padding */
+      padding: 10px;
     }
 
     /* Responsive adjustments for small devices */
     @media (max-width: 768px) {
       #calendar {
-        font-size: 16px; /* adjust text size */
+        font-size: 16px;
       }
     }
 
@@ -105,7 +105,7 @@
       padding: 0 0 0 0;
       box-sizing: border-box;
       align-items: center;
-      position: relative; /* Add this for positioning the emoji */
+      position: relative;
     }
     .webswan-title {
       font-family: 'Pacifico', cursive;
@@ -433,6 +433,20 @@
     /* ------------------------------------- */
     /* Personal Calendar back office styles */
     /* ------------------------------------- */
+    
+    /* New container for the back office to match the calendar's size */
+    .back-office-container {
+        width: 100%;
+        max-width: 600px;
+        border: 4px solid #2290ab;
+        background: #fff;
+        box-sizing: border-box;
+        margin: 20px auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
     .personal-calendar-header {
       background: #07b5c2;
       color: #fff;
@@ -449,10 +463,11 @@
     }
     .personal-calendar-main {
       padding: 20px;
-      display: flex; /* Make it a flex container */
-      flex-direction: column; /* Stack children vertically */
-      align-items: center; /* Center horizontally */
-      width: 100%; /* Take full width */
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      padding-top: 0;
     }
     .personal-calendar-controls {
       display: flex;
@@ -460,8 +475,9 @@
       justify-content: center;
       gap: 10px;
       margin-bottom: 20px;
-      width: 100%; /* Make controls take full width */
-      max-width: 600px; /* Limit width to match calendar */
+      width: 100%;
+      max-width: 600px;
+      margin-top: 20px;
     }
     .personal-calendar-controls button {
       flex-grow: 1;
@@ -527,7 +543,7 @@
     /* Styles for the single, fading emojis */
     .fading-emoji {
       position: absolute;
-      font-size: 2.2em; /* Made it bigger */
+      font-size: 2.2em;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
@@ -596,7 +612,7 @@
     /* NEW BANNER STYLES */
     /* ------------------------------------- */
     .back-office-banner {
-      background: #07b5c2; /* The blue from the first picture */
+      background: #07b5c2;
       color: #fff;
       padding: 15px 0;
       text-align: center;
@@ -604,66 +620,66 @@
       font-size: 2em;
       position: relative;
       width: 100%;
-      max-width: 600px; /* Match calendar width */
       box-sizing: border-box;
-      overflow: hidden; /* Hide overflowing emojis */
-      height: 100px; /* Set a fixed height for the banner */
+      overflow: hidden;
+      height: 150px;
       display: flex;
       align-items: center;
       justify-content: center;
+      border-bottom: 4px solid #fff;
     }
 
     .back-office-banner .banner-text {
-      position: absolute; /* Allow emoji to overlay */
+      position: absolute;
       z-index: 1;
     }
 
     .back-office-banner .animated-emoji {
       position: absolute;
-      font-size: 3em; /* Larger emojis */
+      font-size: 2.5em;
       opacity: 0;
-      animation-duration: 3s; /* Total animation time for one emoji */
+      animation-duration: 3s;
       animation-fill-mode: forwards;
-      z-index: 2; /* Ensure emoji is above text */
-      text-shadow: 0 0 10px rgba(0,0,0,0.5); /* Add some shadow for pop */
+      z-index: 2;
+      text-shadow: 0 0 10px rgba(0,0,0,0.5);
     }
 
     /* New Keyframe Animations for Emojis */
     @keyframes bounce-spin-shake {
       0% {
         opacity: 0;
-        transform: translate(-100%, -50%) scale(0.5) rotate(0deg); /* Start off-screen left, smaller */
+        transform: translate(-100%, -50%) scale(0.5) rotate(0deg);
       }
       20% {
         opacity: 1;
-        transform: translate(-50%, -50%) scale(1.2) rotate(30deg); /* Bounce in, slightly larger, spin */
+        transform: translate(-50%, -50%) scale(1.2) rotate(30deg);
       }
       40% {
-        transform: translate(-50%, -50%) scale(1) rotate(-20deg); /* Settle, spin back */
+        transform: translate(-50%, -50%) scale(1) rotate(-20deg);
       }
       60% {
-        transform: translate(-50%, -50%) scale(1.1) rotate(10deg); /* Slight shake/bounce */
+        transform: translate(-50%, -50%) scale(1.1) rotate(10deg);
       }
       80% {
         opacity: 1;
-        transform: translate(-50%, -50%) scale(1) rotate(0deg); /* Back to normal size, no spin */
+        transform: translate(-50%, -50%) scale(1) rotate(0deg);
       }
       100% {
         opacity: 0;
-        transform: translate(100%, -50%) scale(0.8) rotate(0deg); /* Move off-screen right, slightly smaller */
+        transform: translate(100%, -50%) scale(0.8) rotate(0deg);
       }
     }
 
     .back-office .calendar-header {
-        margin-top: 20px; /* Add some space below the new banner */
+        margin-top: 20px;
     }
     
     /* New styles for scrollable container */
     .scrollable-content-container {
         width: 100%;
         max-width: 600px;
-        max-height: 50vh; /* Set a max height */
-        overflow-y: auto; /* Enable vertical scrolling */
+        max-height: 50vh;
+        overflow-y: auto;
         padding: 0 10px;
         box-sizing: border-box;
     }
@@ -727,48 +743,7 @@
     </footer>
   </div>
 
-  <div id="backOfficeSection" class="back-office" style="display:none;">
-    <div class="back-office-banner">
-      <div class="banner-text">Personal Calendar</div>
-      <span id="backOfficeAnimatedEmoji" class="animated-emoji"></span>
-    </div>
-    <div class="personal-calendar-main">
-      <div class="calendar-header">
-        <button id="prevBackBtn">&lt;</button>
-        <span id="backCurrentMonthYear"></span>
-        <button id="nextBackBtn">&gt;</button>
-      </div>
-      <div class="calendar-wrap">
-        <table class="calendar" id="backCalendar">
-          <thead>
-            <tr><th>Sun</th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th></tr>
-          </thead>
-          <tbody id="backCalendarBody"></tbody>
-        </table>
-      </div>
-      <div class="personal-calendar-controls">
-        <button id="viewAppointmentsBtn">Appointments</button>
-        <button id="viewEventsBtn">View Events</button>
-        <button id="addEventsBtn">Add Event</button>
-        <button id="viewTasksBtn">View Tasks</button>
-        <button id="addTasksBtn">Add Task</button>
-        <button id="unblockDaysBtn" class="unblock-btn">Unblock Day/Hours</button>
-        <button id="blockDaysBtn" class="block-btn">Block Day/Hours</button>
-        <button id="goBackBtn" style="background:#14395d;color:#fff;">Go Back</button>
-      </div>
-      <div id="scrollableContentContainer" class="scrollable-content-container">
-        <ul id="appointmentsList" style="list-style:none;padding:0; display:none; margin-top: 20px; width: 100%;"></ul>
-        <ul id="eventsList" style="list-style:none;padding:0; display:none; margin-top: 20px; width: 100%;"></ul>
-        <ul id="tasksList" style="list-style:none;padding:0; display:none; margin-top: 20px; width: 100%;"></ul>
-        <ul id="blockedDaysList" style="list-style:none;padding:0; display:none; margin-top: 20px; width: 100%;"></ul>
-      </div>
-      <div style="display:none; width: 100%; max-width: 600px; text-align: center;" id="saveAllContainer">
-        <button id="saveAllBtn" style="margin-top: 20px; width:calc(50% - 10px); max-width: 200px;">Save Changes</button>
-        <button id="exitDetailsBtn" class="exit-details-btn" style="margin-top: 20px; width:calc(50% - 10px); max-width: 200px;"><i class="fas fa-key"></i></button>
-      </div>
-    </div>
-  </div>
-
+  <!-- Admin Login Modal -->
   <div id="adminModal" class="modal">
     <div class="modal-content" id="loginModalContent">
       <button class="close-modal" id="closeAdminModal">&times;</button>
@@ -777,12 +752,57 @@
         <label for="adminPwd">Password</label>
         <input type="password" id="adminPwd" required autocomplete="off">
         <button type="submit">Login</button>
-        <div class="login-error" id="adminLoginMsg">Incorrect password.</div>
-        <div class="login-success" id="loginSuccess"></div>
+        <div class="login-error" id="adminLoginMsg" style="display:none; color:red; margin-top:10px;">Incorrect password.</div>
       </form>
     </div>
   </div>
 
+  <!-- Back Office Section -->
+  <div id="backOfficeSection" class="back-office" style="display:none; width: 100%;">
+    <div class="back-office-container">
+      <div class="back-office-banner">
+        <div class="banner-text">Personal Calendar</div>
+        <span id="backOfficeAnimatedEmoji" class="animated-emoji"></span>
+      </div>
+      <div class="personal-calendar-main">
+        <div class="calendar-header">
+          <button id="prevBackBtn">&lt;</button>
+          <span id="backCurrentMonthYear"></span>
+          <button id="nextBackBtn">&gt;</button>
+        </div>
+        <div class="calendar-wrap">
+          <table class="calendar" id="backCalendar">
+            <thead>
+              <tr><th>Sun</th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th></tr>
+            </thead>
+            <tbody id="backCalendarBody"></tbody>
+          </table>
+        </div>
+        <div class="personal-calendar-controls">
+          <button id="viewAppointmentsBtn">Appointments</button>
+          <button id="viewEventsBtn">View Events</button>
+          <button id="addEventsBtn">Add Event</button>
+          <button id="viewTasksBtn">View Tasks</button>
+          <button id="addTasksBtn">Add Task</button>
+          <button id="unblockDaysBtn" class="unblock-btn">Unblock Day/Hours</button>
+          <button id="blockDaysBtn" class="block-btn">Block Day/Hours</button>
+          <button id="goBackBtn" style="background:#14395d;color:#fff;">Go Back</button>
+        </div>
+        <div id="scrollableContentContainer" class="scrollable-content-container">
+          <ul id="appointmentsList" style="list-style:none;padding:0; display:none; margin-top: 20px; width: 100%;"></ul>
+          <ul id="eventsList" style="list-style:none;padding:0; display:none; margin-top: 20px; width: 100%;"></ul>
+          <ul id="tasksList" style="list-style:none;padding:0; display:none; margin-top: 20px; width: 100%;"></ul>
+          <ul id="blockedDaysList" style="list-style:none;padding:0; display:none; margin-top: 20px; width: 100%;"></ul>
+        </div>
+        <div style="display:none; width: 100%; max-width: 600px; text-align: center;" id="saveAllContainer">
+          <button id="saveAllBtn" style="margin-top: 20px; width:calc(50% - 10px); max-width: 200px;">Save Changes</button>
+          <button id="exitDetailsBtn" class="exit-details-btn" style="margin-top: 20px; width:calc(50% - 10px); max-width: 200px;"><i class="fas fa-key"></i></button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Booking Modal -->
   <div id="bookingModal" class="modal">
     <div class="modal-content">
       <button class="close-modal" id="closeBookingModal">&times;</button>
@@ -794,7 +814,9 @@
             <label for="bookingName">Name:</label>
             <input type="text" id="bookingName" name="Name" required>
             <label for="bookingPhone">Phone:</label>
-            <input type="text" id="bookingPhone" name="Phone" required>
+            <input type="tel" id="bookingPhone" name="Phone" required pattern="^[\+]?[1-9][\d]{0,15}$" title="Please enter a valid phone number">
+            <label for="bookingEmail">Email:</label>
+            <input type="email" id="bookingEmail" name="Email" required>
             <label for="bookingReason">Reason for Appointment:</label>
             <select id="bookingReason" name="Reason" required>
               <option value="">Select a reason</option>
@@ -822,6 +844,7 @@
     </div>
   </div>
 
+  <!-- Block Modal -->
   <div id="blockModal" class="modal">
     <div class="modal-content">
       <button class="close-modal" id="closeBlockModal">&times;</button>
@@ -844,6 +867,7 @@
     </div>
   </div>
 
+  <!-- Event Modal -->
   <div id="eventModal" class="modal">
     <div class="modal-content">
       <button class="close-modal" id="closeEventModal">&times;</button>
@@ -858,6 +882,7 @@
     </div>
   </div>
 
+  <!-- Task Modal -->
   <div id="taskModal" class="modal">
     <div class="modal-content">
       <button class="close-modal" id="closeTaskModal">&times;</button>
@@ -889,12 +914,17 @@
     </div>
   </div>
 
-  <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-firestore.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-analytics.js"></script>
+  <!-- Audio element for notification sound -->
+  <audio id="notificationSound" preload="auto">
+    <source src="data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmwhBDmX3PLCdCwFJ4TO8tKJNwgZbLvt559OEAwQr+DxsF8cBjiRz/LPeCQFJHfH8N2QQAoUXrTp66hVFApGn+DyvmwhBDmX3PLCdCsEI4XN8tOKOQgYaLvs6JlOEAxQqODwtmMbBzuX2/LDeSQFI4DF8daIOwgWXLPr7KdWEgpCyebyxHkrBD+U2fLHeSsFJIXE8NOKOQgZaLns6Zw=" type="audio/wav">
+  </audio>
+
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-analytics-compat.js"></script>
   <script>
-    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    // Firebase config
     const firebaseConfig = {
       apiKey: "AIzaSyB50YiZNBFj0dgwwA9iEHqqvAurQ5HcvD0",
       authDomain: "the-webswan-calendar.firebaseapp.com",
@@ -909,24 +939,82 @@
     firebase.initializeApp(firebaseConfig);
     firebase.analytics();
     
-    // ---------------------------
+    // Initialize Firestore
+    const db = firebase.firestore();
+
+    // Firebase data functions
+    async function saveToFirebase(collection, data) {
+        try {
+            await db.collection(collection).doc('data').set({ items: data });
+            console.log(`${collection} saved to Firebase successfully`);
+            playNotificationSound();
+        } catch (error) {
+            console.error(`Error saving ${collection} to Firebase:`, error);
+            localStorage.setItem(collection, JSON.stringify(data));
+        }
+    }
+
+    async function loadFromFirebase(collection) {
+        try {
+            const doc = await db.collection(collection).doc('data').get();
+            if (doc.exists) {
+                return doc.data().items || [];
+            } else {
+                console.log(`No ${collection} found in Firebase`);
+                return [];
+            }
+        } catch (error) {
+            console.error(`Error loading ${collection} from Firebase:`, error);
+            const localData = localStorage.getItem(collection);
+            return localData ? JSON.parse(localData) : [];
+        }
+    }
+
+    // Initialize data from Firebase
+    async function initializeData() {
+        try {
+            blockedDays = await loadFromFirebase('blockedDays');
+            tasks = await loadFromFirebase('tasks');
+            appointments = await loadFromFirebase('appointments');
+            events = await loadFromFirebase('events');
+            
+            console.log('Data loaded from Firebase:', { 
+                blockedDays: blockedDays.length,
+                tasks: tasks.length, 
+                appointments: appointments.length,
+                events: events.length 
+            });
+            
+            renderMonthCalendar(currentDate, calendarBody, currentMonthYearEl);
+            renderMonthCalendar(backDate, backCalendarBody, backCurrentMonthYear, true);
+        } catch (error) {
+            console.error('Error initializing data from Firebase:', error);
+        }
+    }
+
+    // Notification sound function
+    function playNotificationSound() {
+        const audio = document.getElementById('notificationSound');
+        if (audio) {
+            audio.play().catch(e => console.log('Could not play notification sound:', e));
+        }
+    }
+    
     // Elements - front calendar
-    // ---------------------------
     const calendarBody = document.getElementById('calendarBody');
     const currentMonthYearEl = document.getElementById('currentMonthYear');
     const prevBtn = document.getElementById('prevBtn');
     const nextBtn = document.getElementById('nextBtn');
-    const bellIcon = document.getElementById('bellIcon'); // This bell icon is for the previous design, might not be used
     const bookingForm = document.getElementById('bookingForm');
     const closeBookingModal = document.getElementById('closeBookingModal');
     const bookingModal = document.getElementById('bookingModal');
-    const blockDaysBtn = document.getElementById('blockDaysBtn');
     const timeSlotsContainer = document.getElementById('timeSlotsContainer');
     const bookingReasonSelect = document.getElementById('bookingReason');
     const otherReasonContainer = document.getElementById('otherReasonContainer');
     const otherReasonText = document.getElementById('otherReasonText');
     const bookingNameInput = document.getElementById('bookingName');
     const bookingPhoneInput = document.getElementById('bookingPhone');
+    const bookingEmailInput = document.getElementById('bookingEmail');
     const bookingCommentsInput = document.getElementById('bookingComments');
     const bookingModalTitle = document.getElementById('bookingModalTitle');
     const appointmentDateInput = document.getElementById('appointmentDateInput');
@@ -934,27 +1022,20 @@
     const bookingFormContainer = document.getElementById('bookingFormContainer');
     const animatedEmoji = document.getElementById('animatedEmoji');
 
-
-    // ---------------------------
     // Elements - back office calendar
-    // ---------------------------
     const backCalendarBody = document.getElementById('backCalendarBody');
     const backCurrentMonthYear = document.getElementById('backCurrentMonthYear');
     const prevBackBtn = document.getElementById('prevBackBtn');
     const nextBackBtn = document.getElementById('nextBackBtn');
-    const backOfficeAnimatedEmoji = document.getElementById('backOfficeAnimatedEmoji'); // New emoji element for back office banner
+    const backOfficeAnimatedEmoji = document.getElementById('backOfficeAnimatedEmoji');
 
-
-    // ---------------------------
     // Back office lists & controls
-    // ---------------------------
     const appointmentsList = document.getElementById('appointmentsList');
     const eventsList = document.getElementById('eventsList');
     const tasksList = document.getElementById('tasksList');
     const blockedDaysList = document.getElementById('blockedDaysList');
     const saveAllContainer = document.getElementById('saveAllContainer');
     const exitDetailsBtn = document.getElementById('exitDetailsBtn');
-
     const viewAppointmentsBtn = document.getElementById('viewAppointmentsBtn');
     const viewEventsBtn = document.getElementById('viewEventsBtn');
     const addEventsBtn = document.getElementById('addEventsBtn');
@@ -983,9 +1064,7 @@
     const blockStartTimeInput = document.getElementById('blockStartTime');
     const blockEndTimeInput = document.getElementById('blockEndTime');
 
-    // ---------------------------
     // Modal elements and forms
-    // ---------------------------
     const adminLoginBtn = document.getElementById('adminLoginBtn');
     const adminModal = document.getElementById('adminModal');
     const closeAdminModal = document.getElementById('closeAdminModal');
@@ -995,17 +1074,21 @@
     const backOfficeSection = document.getElementById('backOfficeSection');
     const mainPage = document.getElementById('mainPage');
 
-    // ---------------------------
-    // Data
-    // ---------------------------
+    // Data - Initialize as empty arrays (will be loaded from Firebase)
     let currentDate = new Date();
     let backDate = new Date();
-    let blockedDays = JSON.parse(localStorage.getItem('blockedDays')) || [];
-    let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
-    let appointments = JSON.parse(localStorage.getItem('appointments')) || [];
-    let events = JSON.parse(localStorage.getItem('events')) || [];
+    let blockedDays = [];
+    let tasks = [];
+    let appointments = [];
+    let events = [];
     let currentBookingDate = '';
     let currentBookingTime = '';
+
+    // Initialize data from Firebase after page loads
+    document.addEventListener('DOMContentLoaded', function() {
+        initializeData();
+        startFrontendEmojiAnimation();
+    });
 
     // Helper: format YYYY-MM-DD
     function formatDate(date) {
@@ -1056,9 +1139,6 @@
           cell.classList.add('blocked');
         }
         
-        // This is the key fix: NO DETAILS ARE ADDED TO THE CALENDAR CELLS
-        // All details are now only visible in the lists triggered by buttons.
-        
         cell.onclick = (e) => {
           if (!isBackOffice && !cell.classList.contains('past') && !cell.classList.contains('blocked')) {
             showBookingModal(formattedDate);
@@ -1108,6 +1188,7 @@
         document.getElementById('bookingDateText').textContent = `Booking for: ${date}`;
         bookingNameInput.value = '';
         bookingPhoneInput.value = '';
+        bookingEmailInput.value = '';
         bookingCommentsInput.value = '';
         bookingReasonSelect.value = '';
         otherReasonText.value = '';
@@ -1118,7 +1199,6 @@
             bookingModalTitle.textContent = 'Edit Appointment';
             document.getElementById('bookingDateText').textContent = `Edit appointment for: ${appointment.date}`;
             
-            // Add a date input for editing
             const dateInput = document.createElement('input');
             dateInput.type = 'date';
             dateInput.id = 'editAppointmentDate';
@@ -1128,6 +1208,7 @@
             
             bookingNameInput.value = appointment.name;
             bookingPhoneInput.value = appointment.phone;
+            bookingEmailInput.value = appointment.email || '';
             bookingCommentsInput.value = appointment.comments || '';
 
             const reasonInOptions = Array.from(bookingReasonSelect.options).some(o => o.value === appointment.reason);
@@ -1180,6 +1261,7 @@
                     if (!isTimeBlocked) {
                         timeSlotEl.addEventListener('click', () => {
                             currentBookingTime = time;
+                            playNotificationSound();
                             alert(`You have selected an appointment for ${date} at ${time}. Please fill out the form.`);
                             document.getElementById('bookingForm').style.display = 'block';
                             appointmentDateInput.value = date;
@@ -1214,7 +1296,7 @@
         }
     });
     
-    bookingForm.addEventListener('submit', (e) => {
+    bookingForm.addEventListener('submit', async (e) => {
         e.preventDefault();
         
         const editIndex = bookingForm.dataset.editIndex;
@@ -1230,6 +1312,7 @@
 
         const name = bookingNameInput.value;
         const phone = bookingPhoneInput.value;
+        const email = bookingEmailInput.value;
         const comments = bookingCommentsInput.value;
         let reason = bookingReasonSelect.value;
         
@@ -1238,14 +1321,14 @@
         }
 
         if (editIndex !== "-1") {
-            appointments[editIndex] = { date: bookingDate, time: bookingTime, name, phone, reason, comments, completed: appointments[editIndex].completed };
+            appointments[editIndex] = { date: bookingDate, time: bookingTime, name, phone, email, reason, comments, completed: appointments[editIndex].completed };
             alert("Appointment has been successfully updated!");
         } else {
-            appointments.push({date: bookingDate, time: bookingTime, name, phone, reason, comments, completed: false});
+            appointments.push({date: bookingDate, time: bookingTime, name, phone, email, reason, comments, completed: false});
             alert("New Appointment Booked! We will contact you soon.");
         }
         
-        localStorage.setItem('appointments', JSON.stringify(appointments));
+        await saveToFirebase('appointments', appointments);
 
         bookingModal.classList.remove('show');
         renderMonthCalendar(currentDate, calendarBody, currentMonthYearEl);
@@ -1344,9 +1427,9 @@
       });
     }
 
-    window.unblockDay = function(index) {
+    window.unblockDay = async function(index) {
       blockedDays.splice(index, 1);
-      localStorage.setItem('blockedDays', JSON.stringify(blockedDays));
+      await saveToFirebase('blockedDays', blockedDays);
       renderBlockedDays();
       renderMonthCalendar(currentDate, calendarBody, currentMonthYearEl);
       renderMonthCalendar(backDate, backCalendarBody, backCurrentMonthYear, true);
@@ -1390,10 +1473,10 @@
       if (type === 'tasks') renderTasks();
     };
     
-    saveAllBtn.addEventListener('click', () => {
-      localStorage.setItem('appointments', JSON.stringify(appointments));
-      localStorage.setItem('events', JSON.stringify(events));
-      localStorage.setItem('tasks', JSON.stringify(tasks));
+    saveAllBtn.addEventListener('click', async () => {
+      await saveToFirebase('appointments', appointments);
+      await saveToFirebase('events', events);
+      await saveToFirebase('tasks', tasks);
       alert("All changes have been saved!");
       renderMonthCalendar(currentDate, calendarBody, currentMonthYearEl);
       renderMonthCalendar(backDate, backCalendarBody, backCurrentMonthYear, true);
@@ -1404,16 +1487,14 @@
         hideAllLists();
     });
 
-    // ---------------------------
     // LOGIN
-    // ---------------------------
     function handleLogin(e) {
       e.preventDefault();
       if (adminPwd.value === "2169") {
         adminModal.classList.remove('show');
         mainPage.style.display = 'none';
         backOfficeSection.style.display = 'flex';
-        startBackOfficeEmojiAnimation(); // Start the specific back-office emoji animation
+        startBackOfficeEmojiAnimation();
       } else {
         adminLoginMsg.style.display = 'block';
       }
@@ -1454,7 +1535,7 @@
     isAllDayCheckbox.addEventListener('change', function() {
       timeRangeContainer.style.display = this.checked ? 'none' : 'block';
     });
-    addBlockBtn.addEventListener('click', function() {
+    addBlockBtn.addEventListener('click', async function() {
       const date = blockDateInput.value;
       const reason = blockReasonInput.value || 'Blocked';
       const isAllDay = isAllDayCheckbox.checked;
@@ -1472,7 +1553,7 @@
         } else {
           blockedDays.push({ date, reason: `${reason} (All Day)`, isAllDay: true });
         }
-        localStorage.setItem('blockedDays', JSON.stringify(blockedDays));
+        await saveToFirebase('blockedDays', blockedDays);
         renderMonthCalendar(currentDate, calendarBody, currentMonthYearEl);
         renderMonthCalendar(backDate, backCalendarBody, backCurrentMonthYear, true);
         blockModal.classList.remove('show');
@@ -1484,14 +1565,14 @@
     addEventsBtn.addEventListener('click', function() {
       hideAllLists();
       eventModal.classList.add('show');
-      eventModal.dataset.editIndex = ''; // Reset edit mode
+      eventModal.dataset.editIndex = '';
       eventDateInput.value = '';
       eventText.value = '';
     });
     closeEventModal.addEventListener('click', function() {
       eventModal.classList.remove('show');
     });
-    addEventForm.addEventListener('submit', function(e) {
+    addEventForm.addEventListener('submit', async function(e) {
       e.preventDefault();
       const date = eventDateInput.value;
       const reason = eventText.value;
@@ -1503,7 +1584,7 @@
         } else {
             events.push({ date, reason, completed: false });
         }
-        localStorage.setItem('events', JSON.stringify(events));
+        await saveToFirebase('events', events);
         renderEvents();
         eventModal.classList.remove('show');
         renderMonthCalendar(currentDate, calendarBody, currentMonthYearEl);
@@ -1517,14 +1598,14 @@
     addTasksBtn.addEventListener('click', function() {
       hideAllLists();
       taskModal.classList.add('show');
-      taskModal.dataset.editIndex = ''; // Reset edit mode
+      taskModal.dataset.editIndex = '';
       taskDateInput.value = '';
       taskTextSelect.value = '';
     });
     closeTaskModal.addEventListener('click', function() {
       taskModal.classList.remove('show');
     });
-    addTaskForm.addEventListener('submit', function(e) {
+    addTaskForm.addEventListener('submit', async function(e) {
       e.preventDefault();
       const taskText = taskTextSelect.value;
       const date = taskDateInput.value;
@@ -1536,7 +1617,7 @@
         } else {
             tasks.push({ text: taskText, date, completed: false });
         }
-        localStorage.setItem('tasks', JSON.stringify(tasks));
+        await saveToFirebase('tasks', tasks);
         renderTasks();
         taskModal.classList.remove('show');
         renderMonthCalendar(currentDate, calendarBody, currentMonthYearEl);
@@ -1585,29 +1666,9 @@
       }
     });
 
-    // Bell notification logic - not used in the back-office anymore with the new design.
-    // Kept here for the main page if needed, but the bellIcon element is not present
-    // in the current back-office structure.
-    let bellInterval;
-    function startBellAnimation() {
-      if (bellIcon) {
-        bellInterval = setInterval(() => {
-          bellIcon.classList.add('shake');
-          setTimeout(() => {
-            bellIcon.classList.remove('shake');
-          }, 800);
-        }, 5000);
-      }
-    }
-    function stopBellAnimation() {
-      clearInterval(bellInterval);
-    }
-    // No longer calling startBellAnimation for bellIcon by default in backoffice.
-    // If you add bellIcon back to the back office, ensure it's handled.
-    
-    // Front-end emoji animation (for 'The Web Swan' header)
+    // Front-end emoji animation
     function startFrontendEmojiAnimation() {
-        const emojis = ['🧩', '🎯', '📝', '🗓️', '🔒', '⏰', '🔓', '💡', '⭐', '❤️'];
+        const emojis = ['🧩', '🎯', '📅', '🗓️', '📝', '⏰', '🔔', '💡', '⭐', '❤️'];
         let emojiIndex = 0;
 
         setInterval(() => {
@@ -1621,26 +1682,22 @@
     
     // Back-office banner emoji animation
     function startBackOfficeEmojiAnimation() {
-        const backOfficeEmojis = ['🧩', '🎯', '✨', '🗓️', '✅', '💡', '🚀', '⭐', '❤️', '💼']; // Different emojis for back office
+        const backOfficeEmojis = ['🧩', '🎯', '✨', '🗓️', '✅', '💡', '🚀', '⭐', '❤️', '💼'];
         let currentEmojiIndex = 0;
         
-        // Clear any previous animation
         if (backOfficeAnimatedEmoji) {
             backOfficeAnimatedEmoji.style.animation = 'none';
-            backOfficeAnimatedEmoji.offsetHeight; // Trigger reflow
+            backOfficeAnimatedEmoji.offsetHeight;
         }
 
         setInterval(() => {
             backOfficeAnimatedEmoji.textContent = backOfficeEmojis[currentEmojiIndex];
-            backOfficeAnimatedEmoji.style.animation = 'none'; // Reset animation
-            void backOfficeAnimatedEmoji.offsetWidth; // Trigger reflow
-            backOfficeAnimatedEmoji.style.animation = 'bounce-spin-shake 3s ease-in-out forwards'; // Apply new animation
+            backOfficeAnimatedEmoji.style.animation = 'none';
+            void backOfficeAnimatedEmoji.offsetWidth;
+            backOfficeAnimatedEmoji.style.animation = 'bounce-spin-shake 3s ease-in-out forwards';
             currentEmojiIndex = (currentEmojiIndex + 1) % backOfficeEmojis.length;
-        }, 3000); // 3 seconds to match animation duration
+        }, 3000);
     }
-
-    // Start the frontend animation when the page loads
-    startFrontendEmojiAnimation();
 
     // Initial render calls
     renderMonthCalendar(currentDate, calendarBody, currentMonthYearEl);
