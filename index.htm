@@ -4,13 +4,24 @@
   <meta charset="UTF-8">
   <title>The Web Swan Calendar</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- CONTENT SECURITY POLICY FIX -->
+  <meta http-equiv="Content-Security-Policy" content="
+    default-src 'self' https://cdnjs.cloudflare.com https://fonts.googleapis.com https://fonts.gstatic.com https://www.gstatic.com;
+    script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://www.gstatic.com;
+    style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com;
+    font-src 'self' https://fonts.gstatic.com;
+    connect-src 'self' https://the-webswan-calendar.firebaseio.com https://the-webswan-calendar.firebasestorage.app https://formspree.io;
+    img-src 'self' data: https:;
+  ">
+  
   <link href="https://fonts.googleapis.com/css?family=Pacifico&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
   <style>
     /* Full-screen calendar container */
     .calendar-container {
-      width: 100vw;
-      height: 100vh;
+      width: 100vw;       /* 100% of viewport width */
+      height: 100vh;      /* 100% of viewport height */
       margin: 0;
       padding: 0;
       box-sizing: border-box;
@@ -25,13 +36,13 @@
       height: 100%;
       max-width: 100%;
       max-height: 100%;
-      padding: 10px;
+      padding: 10px; /* optional inner padding */
     }
 
     /* Responsive adjustments for small devices */
     @media (max-width: 768px) {
       #calendar {
-        font-size: 16px;
+        font-size: 16px; /* adjust text size */
       }
     }
 
@@ -105,7 +116,7 @@
       padding: 0 0 0 0;
       box-sizing: border-box;
       align-items: center;
-      position: relative;
+      position: relative; /* Add this for positioning the emoji */
     }
     .webswan-title {
       font-family: 'Pacifico', cursive;
@@ -438,7 +449,7 @@
     .back-office-container {
         width: 100%;
         max-width: 600px;
-        border: 4px solid #2290ab;
+        border: 4px solid #2290ab; /* Matches calendar border */
         background: #fff;
         box-sizing: border-box;
         margin: 20px auto;
@@ -463,11 +474,11 @@
     }
     .personal-calendar-main {
       padding: 20px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      width: 100%;
-      padding-top: 0;
+      display: flex; /* Make it a flex container */
+      flex-direction: column; /* Stack children vertically */
+      align-items: center; /* Center horizontally */
+      width: 100%; /* Take full width */
+      padding-top: 0; /* Adjusted padding to better align with the banner */
     }
     .personal-calendar-controls {
       display: flex;
@@ -475,8 +486,8 @@
       justify-content: center;
       gap: 10px;
       margin-bottom: 20px;
-      width: 100%;
-      max-width: 600px;
+      width: 100%; /* Make controls take full width */
+      max-width: 600px; /* Limit width to match calendar */
       margin-top: 20px;
     }
     .personal-calendar-controls button {
@@ -543,7 +554,7 @@
     /* Styles for the single, fading emojis */
     .fading-emoji {
       position: absolute;
-      font-size: 2.2em;
+      font-size: 2.2em; /* Made it bigger */
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
@@ -612,7 +623,7 @@
     /* NEW BANNER STYLES */
     /* ------------------------------------- */
     .back-office-banner {
-      background: #07b5c2;
+      background: #07b5c2; /* The blue from the first picture */
       color: #fff;
       padding: 15px 0;
       text-align: center;
@@ -621,8 +632,8 @@
       position: relative;
       width: 100%;
       box-sizing: border-box;
-      overflow: hidden;
-      height: 150px;
+      overflow: hidden; /* Hide overflowing emojis */
+      height: 150px; /* Adjusted height for visibility */
       display: flex;
       align-items: center;
       justify-content: center;
@@ -630,56 +641,56 @@
     }
 
     .back-office-banner .banner-text {
-      position: absolute;
+      position: absolute; /* Allow emoji to overlay */
       z-index: 1;
     }
 
     .back-office-banner .animated-emoji {
       position: absolute;
-      font-size: 2.5em;
+      font-size: 2.5em; /* Reduced emoji size for better fit */
       opacity: 0;
-      animation-duration: 3s;
+      animation-duration: 3s; /* Total animation time for one emoji */
       animation-fill-mode: forwards;
-      z-index: 2;
-      text-shadow: 0 0 10px rgba(0,0,0,0.5);
+      z-index: 2; /* Ensure emoji is above text */
+      text-shadow: 0 0 10px rgba(0,0,0,0.5); /* Add some shadow for pop */
     }
 
     /* New Keyframe Animations for Emojis */
     @keyframes bounce-spin-shake {
       0% {
         opacity: 0;
-        transform: translate(-100%, -50%) scale(0.5) rotate(0deg);
+        transform: translate(-100%, -50%) scale(0.5) rotate(0deg); /* Start off-screen left, smaller */
       }
       20% {
         opacity: 1;
-        transform: translate(-50%, -50%) scale(1.2) rotate(30deg);
+        transform: translate(-50%, -50%) scale(1.2) rotate(30deg); /* Bounce in, slightly larger, spin */
       }
       40% {
-        transform: translate(-50%, -50%) scale(1) rotate(-20deg);
+        transform: translate(-50%, -50%) scale(1) rotate(-20deg); /* Settle, spin back */
       }
       60% {
-        transform: translate(-50%, -50%) scale(1.1) rotate(10deg);
+        transform: translate(-50%, -50%) scale(1.1) rotate(10deg); /* Slight shake/bounce */
       }
       80% {
         opacity: 1;
-        transform: translate(-50%, -50%) scale(1) rotate(0deg);
+        transform: translate(-50%, -50%) scale(1) rotate(0deg); /* Back to normal size, no spin */
       }
       100% {
         opacity: 0;
-        transform: translate(100%, -50%) scale(0.8) rotate(0deg);
+        transform: translate(100%, -50%) scale(0.8) rotate(0deg); /* Move off-screen right, slightly smaller */
       }
     }
 
     .back-office .calendar-header {
-        margin-top: 20px;
+        margin-top: 20px; /* Add some space below the new banner */
     }
     
     /* New styles for scrollable container */
     .scrollable-content-container {
         width: 100%;
         max-width: 600px;
-        max-height: 50vh;
-        overflow-y: auto;
+        max-height: 50vh; /* Set a max height */
+        overflow-y: auto; /* Enable vertical scrolling */
         padding: 0 10px;
         box-sizing: border-box;
     }
@@ -689,6 +700,17 @@
       background: #5d5d5d;
       color: #fff;
       margin-left: 10px;
+    }
+
+    /* Edit modal styles */
+    .edit-modal {
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      max-width: 400px;
+      width: 90vw;
+      margin: 20px auto;
+      border: 2px solid #2290ab;
     }
     
   </style>
@@ -743,21 +765,6 @@
     </footer>
   </div>
 
-  <!-- Admin Login Modal -->
-  <div id="adminModal" class="modal">
-    <div class="modal-content" id="loginModalContent">
-      <button class="close-modal" id="closeAdminModal">&times;</button>
-      <h2>Admin Login</h2>
-      <form id="loginForm" autocomplete="off">
-        <label for="adminPwd">Password</label>
-        <input type="password" id="adminPwd" required autocomplete="off">
-        <button type="submit">Login</button>
-        <div class="login-error" id="adminLoginMsg" style="display:none; color:red; margin-top:10px;">Incorrect password.</div>
-      </form>
-    </div>
-  </div>
-
-  <!-- Back Office Section -->
   <div id="backOfficeSection" class="back-office" style="display:none; width: 100%;">
     <div class="back-office-container">
       <div class="back-office-banner">
@@ -802,7 +809,21 @@
     </div>
   </div>
 
-  <!-- Booking Modal -->
+  <!-- Modals -->
+  <div id="adminModal" class="modal">
+    <div class="modal-content" id="loginModalContent">
+      <button class="close-modal" id="closeAdminModal">&times;</button>
+      <h2>Admin Login</h2>
+      <form id="loginForm" autocomplete="off">
+        <label for="adminPwd">Password</label>
+        <input type="password" id="adminPwd" required autocomplete="off">
+        <button type="submit">Login</button>
+        <div class="login-error" id="adminLoginMsg">Incorrect password.</div>
+        <div class="login-success" id="loginSuccess"></div>
+      </form>
+    </div>
+  </div>
+
   <div id="bookingModal" class="modal">
     <div class="modal-content">
       <button class="close-modal" id="closeBookingModal">&times;</button>
@@ -814,9 +835,7 @@
             <label for="bookingName">Name:</label>
             <input type="text" id="bookingName" name="Name" required>
             <label for="bookingPhone">Phone:</label>
-            <input type="tel" id="bookingPhone" name="Phone" required pattern="^[\+]?[1-9][\d]{0,15}$" title="Please enter a valid phone number">
-            <label for="bookingEmail">Email:</label>
-            <input type="email" id="bookingEmail" name="Email" required>
+            <input type="text" id="bookingPhone" name="Phone" required>
             <label for="bookingReason">Reason for Appointment:</label>
             <select id="bookingReason" name="Reason" required>
               <option value="">Select a reason</option>
@@ -844,7 +863,6 @@
     </div>
   </div>
 
-  <!-- Block Modal -->
   <div id="blockModal" class="modal">
     <div class="modal-content">
       <button class="close-modal" id="closeBlockModal">&times;</button>
@@ -867,26 +885,24 @@
     </div>
   </div>
 
-  <!-- Event Modal -->
   <div id="eventModal" class="modal">
     <div class="modal-content">
       <button class="close-modal" id="closeEventModal">&times;</button>
-      <h3>Add New Event</h3>
+      <h3 id="eventModalTitle">Add New Event</h3>
       <form id="addEventForm">
         <label for="eventDate">Event Date:</label>
         <input type="date" id="eventDate" required>
         <label for="eventText">Event Description:</label>
         <input type="text" id="eventText" required>
-        <button type="submit">Add Event</button>
+        <button type="submit" id="eventSubmitBtn">Add Event</button>
       </form>
     </div>
   </div>
 
-  <!-- Task Modal -->
   <div id="taskModal" class="modal">
     <div class="modal-content">
       <button class="close-modal" id="closeTaskModal">&times;</button>
-      <h3>Add New Task</h3>
+      <h3 id="taskModalTitle">Add New Task</h3>
       <form id="addTaskForm">
         <label for="taskDate">Task Date:</label>
         <input type="date" id="taskDate" required>
@@ -909,22 +925,16 @@
           <option value="Party">Party</option>
           <option value="Event">Event</option>
         </select>
-        <button type="submit">Add Task</button>
+        <button type="submit" id="taskSubmitBtn">Add Task</button>
       </form>
     </div>
   </div>
 
-  <!-- Audio element for notification sound -->
-  <audio id="notificationSound" preload="auto">
-    <source src="data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmwhBDmX3PLCdCwFJ4TO8tKJNwgZbLvt559OEAwQr+DxsF8cBjiRz/LPeCQFJHfH8N2QQAoUXrTp66hVFApGn+DyvmwhBDmX3PLCdCsEI4XN8tOKOQgYaLvs6JlOEAxQqODwtmMbBzuX2/LDeSQFI4DF8daIOwgWXLPr7KdWEgpCyebyxHkrBD+U2fLHeSsFJIXE8NOKOQgZaLns6Zw=" type="audio/wav">
-  </audio>
-
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-analytics-compat.js"></script>
+  <!-- SIMPLIFIED FIREBASE SETUP -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
   <script>
-    // Firebase config
+    // Simple Firebase initialization
     const firebaseConfig = {
       apiKey: "AIzaSyB50YiZNBFj0dgwwA9iEHqqvAurQ5HcvD0",
       authDomain: "the-webswan-calendar.firebaseapp.com",
@@ -937,70 +947,13 @@
 
     // Initialize Firebase
     firebase.initializeApp(firebaseConfig);
-    firebase.analytics();
-    
-    // Initialize Firestore
     const db = firebase.firestore();
 
-    // Firebase data functions
-    async function saveToFirebase(collection, data) {
-        try {
-            await db.collection(collection).doc('data').set({ items: data });
-            console.log(`${collection} saved to Firebase successfully`);
-            playNotificationSound();
-        } catch (error) {
-            console.error(`Error saving ${collection} to Firebase:`, error);
-            localStorage.setItem(collection, JSON.stringify(data));
-        }
-    }
+    console.log("Firebase initialized successfully!");
 
-    async function loadFromFirebase(collection) {
-        try {
-            const doc = await db.collection(collection).doc('data').get();
-            if (doc.exists) {
-                return doc.data().items || [];
-            } else {
-                console.log(`No ${collection} found in Firebase`);
-                return [];
-            }
-        } catch (error) {
-            console.error(`Error loading ${collection} from Firebase:`, error);
-            const localData = localStorage.getItem(collection);
-            return localData ? JSON.parse(localData) : [];
-        }
-    }
-
-    // Initialize data from Firebase
-    async function initializeData() {
-        try {
-            blockedDays = await loadFromFirebase('blockedDays');
-            tasks = await loadFromFirebase('tasks');
-            appointments = await loadFromFirebase('appointments');
-            events = await loadFromFirebase('events');
-            
-            console.log('Data loaded from Firebase:', { 
-                blockedDays: blockedDays.length,
-                tasks: tasks.length, 
-                appointments: appointments.length,
-                events: events.length 
-            });
-            
-            renderMonthCalendar(currentDate, calendarBody, currentMonthYearEl);
-            renderMonthCalendar(backDate, backCalendarBody, backCurrentMonthYear, true);
-        } catch (error) {
-            console.error('Error initializing data from Firebase:', error);
-        }
-    }
-
-    // Notification sound function
-    function playNotificationSound() {
-        const audio = document.getElementById('notificationSound');
-        if (audio) {
-            audio.play().catch(e => console.log('Could not play notification sound:', e));
-        }
-    }
-    
-    // Elements - front calendar
+    // ---------------------------
+    // Your existing elements and variables
+    // ---------------------------
     const calendarBody = document.getElementById('calendarBody');
     const currentMonthYearEl = document.getElementById('currentMonthYear');
     const prevBtn = document.getElementById('prevBtn');
@@ -1011,10 +964,8 @@
     const timeSlotsContainer = document.getElementById('timeSlotsContainer');
     const bookingReasonSelect = document.getElementById('bookingReason');
     const otherReasonContainer = document.getElementById('otherReasonContainer');
-    const otherReasonText = document.getElementById('otherReasonText');
     const bookingNameInput = document.getElementById('bookingName');
     const bookingPhoneInput = document.getElementById('bookingPhone');
-    const bookingEmailInput = document.getElementById('bookingEmail');
     const bookingCommentsInput = document.getElementById('bookingComments');
     const bookingModalTitle = document.getElementById('bookingModalTitle');
     const appointmentDateInput = document.getElementById('appointmentDateInput');
@@ -1022,49 +973,33 @@
     const bookingFormContainer = document.getElementById('bookingFormContainer');
     const animatedEmoji = document.getElementById('animatedEmoji');
 
-    // Elements - back office calendar
+    // Back office elements
     const backCalendarBody = document.getElementById('backCalendarBody');
     const backCurrentMonthYear = document.getElementById('backCurrentMonthYear');
     const prevBackBtn = document.getElementById('prevBackBtn');
     const nextBackBtn = document.getElementById('nextBackBtn');
     const backOfficeAnimatedEmoji = document.getElementById('backOfficeAnimatedEmoji');
 
-    // Back office lists & controls
+    // Control elements
     const appointmentsList = document.getElementById('appointmentsList');
     const eventsList = document.getElementById('eventsList');
     const tasksList = document.getElementById('tasksList');
     const blockedDaysList = document.getElementById('blockedDaysList');
     const saveAllContainer = document.getElementById('saveAllContainer');
     const exitDetailsBtn = document.getElementById('exitDetailsBtn');
+
     const viewAppointmentsBtn = document.getElementById('viewAppointmentsBtn');
     const viewEventsBtn = document.getElementById('viewEventsBtn');
     const addEventsBtn = document.getElementById('addEventsBtn');
     const viewTasksBtn = document.getElementById('viewTasksBtn');
     const addTasksBtn = document.getElementById('addTasksBtn');
     const unblockDaysBtn = document.getElementById('unblockDaysBtn');
+    const blockDaysBtn = document.getElementById('blockDaysBtn');
     const goBackBtn = document.getElementById('goBackBtn');
     const saveAllBtn = document.getElementById('saveAllBtn');
     const addBlockBtn = document.getElementById('addBlockBtn');
-    const addEventForm = document.getElementById('addEventForm');
-    const eventModal = document.getElementById('eventModal');
-    const closeEventModal = document.getElementById('closeEventModal');
-    const eventDateInput = document.getElementById('eventDate');
-    const eventText = document.getElementById('eventText');
-    const addTaskForm = document.getElementById('addTaskForm');
-    const closeTaskModal = document.getElementById('closeTaskModal');
-    const taskModal = document.getElementById('taskModal');
-    const taskDateInput = document.getElementById('taskDate');
-    const taskTextSelect = document.getElementById('taskText');
-    const closeBlockModal = document.getElementById('closeBlockModal');
-    const blockModal = document.getElementById('blockModal');
-    const blockDateInput = document.getElementById('blockDate');
-    const isAllDayCheckbox = document.getElementById('isAllDay');
-    const blockReasonInput = document.getElementById('blockReason');
-    const timeRangeContainer = document.getElementById('timeRangeContainer');
-    const blockStartTimeInput = document.getElementById('blockStartTime');
-    const blockEndTimeInput = document.getElementById('blockEndTime');
 
-    // Modal elements and forms
+    // Modal elements
     const adminLoginBtn = document.getElementById('adminLoginBtn');
     const adminModal = document.getElementById('adminModal');
     const closeAdminModal = document.getElementById('closeAdminModal');
@@ -1074,7 +1009,36 @@
     const backOfficeSection = document.getElementById('backOfficeSection');
     const mainPage = document.getElementById('mainPage');
 
-    // Data - Initialize as empty arrays (will be loaded from Firebase)
+    // Event and Task modal elements
+    const eventModal = document.getElementById('eventModal');
+    const closeEventModal = document.getElementById('closeEventModal');
+    const eventDateInput = document.getElementById('eventDate');
+    const eventText = document.getElementById('eventText');
+    const addEventForm = document.getElementById('addEventForm');
+    const eventModalTitle = document.getElementById('eventModalTitle');
+    const eventSubmitBtn = document.getElementById('eventSubmitBtn');
+
+    const taskModal = document.getElementById('taskModal');
+    const closeTaskModal = document.getElementById('closeTaskModal');
+    const taskDateInput = document.getElementById('taskDate');
+    const taskTextSelect = document.getElementById('taskText');
+    const addTaskForm = document.getElementById('addTaskForm');
+    const taskModalTitle = document.getElementById('taskModalTitle');
+    const taskSubmitBtn = document.getElementById('taskSubmitBtn');
+
+    // Block modal elements
+    const blockModal = document.getElementById('blockModal');
+    const closeBlockModal = document.getElementById('closeBlockModal');
+    const blockDateInput = document.getElementById('blockDate');
+    const isAllDayCheckbox = document.getElementById('isAllDay');
+    const blockReasonInput = document.getElementById('blockReason');
+    const timeRangeContainer = document.getElementById('timeRangeContainer');
+    const blockStartTimeInput = document.getElementById('blockStartTime');
+    const blockEndTimeInput = document.getElementById('blockEndTime');
+
+    // ---------------------------
+    // Data - SIMPLIFIED VERSION
+    // ---------------------------
     let currentDate = new Date();
     let backDate = new Date();
     let blockedDays = [];
@@ -1083,12 +1047,8 @@
     let events = [];
     let currentBookingDate = '';
     let currentBookingTime = '';
-
-    // Initialize data from Firebase after page loads
-    document.addEventListener('DOMContentLoaded', function() {
-        initializeData();
-        startFrontendEmojiAnimation();
-    });
+    let currentEditIndex = -1;
+    let currentEditType = '';
 
     // Helper: format YYYY-MM-DD
     function formatDate(date) {
@@ -1097,8 +1057,137 @@
       const day = date.getDate().toString().padStart(2, '0');
       return `${year}-${month}-${day}`;
     }
-    
-    // Generic calendar renderer
+
+    // SIMPLIFIED: Load data from localStorage first, then try Firestore
+    function loadAllData() {
+      console.log("Loading data...");
+      
+      // Try localStorage first for immediate display
+      blockedDays = JSON.parse(localStorage.getItem('blockedDays')) || [];
+      tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+      appointments = JSON.parse(localStorage.getItem('appointments')) || [];
+      events = JSON.parse(localStorage.getItem('events')) || [];
+      
+      // Render calendar immediately
+      renderMonthCalendar(currentDate, calendarBody, currentMonthYearEl);
+      renderMonthCalendar(backDate, backCalendarBody, backCurrentMonthYear, true);
+      
+      // Then try to load from Firestore in background
+      loadFromFirestore();
+    }
+
+    // Load from Firestore (non-blocking)
+    async function loadFromFirestore() {
+      try {
+        console.log("Trying to load from Firestore...");
+        
+        const blockedDaysSnapshot = await db.collection('blockedDays').get();
+        if (!blockedDaysSnapshot.empty) {
+          blockedDays = blockedDaysSnapshot.docs.map(doc => doc.data());
+          localStorage.setItem('blockedDays', JSON.stringify(blockedDays));
+        }
+        
+        const appointmentsSnapshot = await db.collection('appointments').get();
+        if (!appointmentsSnapshot.empty) {
+          appointments = appointmentsSnapshot.docs.map(doc => doc.data());
+          localStorage.setItem('appointments', JSON.stringify(appointments));
+        }
+        
+        const eventsSnapshot = await db.collection('events').get();
+        if (!eventsSnapshot.empty) {
+          events = eventsSnapshot.docs.map(doc => doc.data());
+          localStorage.setItem('events', JSON.stringify(events));
+        }
+        
+        const tasksSnapshot = await db.collection('tasks').get();
+        if (!tasksSnapshot.empty) {
+          tasks = tasksSnapshot.docs.map(doc => doc.data());
+          localStorage.setItem('tasks', JSON.stringify(tasks));
+        }
+        
+        console.log("Firestore data loaded successfully!");
+        // Re-render with Firestore data
+        renderMonthCalendar(currentDate, calendarBody, currentMonthYearEl);
+        renderMonthCalendar(backDate, backCalendarBody, backCurrentMonthYear, true);
+        
+      } catch (error) {
+        console.log("Using localStorage data only:", error);
+      }
+    }
+
+    // SIMPLIFIED: Save to both localStorage and Firestore
+    async function saveBlockedDays() {
+      localStorage.setItem('blockedDays', JSON.stringify(blockedDays));
+      try {
+        // Clear and re-add to Firestore
+        const snapshot = await db.collection('blockedDays').get();
+        const batch = db.batch();
+        snapshot.docs.forEach(doc => batch.delete(doc.ref));
+        await batch.commit();
+        
+        for (const day of blockedDays) {
+          await db.collection('blockedDays').add(day);
+        }
+        console.log("Blocked days saved to Firestore!");
+      } catch (error) {
+        console.log("Failed to save to Firestore, using localStorage:", error);
+      }
+    }
+
+    async function saveAppointments() {
+      localStorage.setItem('appointments', JSON.stringify(appointments));
+      try {
+        const snapshot = await db.collection('appointments').get();
+        const batch = db.batch();
+        snapshot.docs.forEach(doc => batch.delete(doc.ref));
+        await batch.commit();
+        
+        for (const appointment of appointments) {
+          await db.collection('appointments').add(appointment);
+        }
+        console.log("Appointments saved to Firestore!");
+      } catch (error) {
+        console.log("Failed to save appointments to Firestore:", error);
+      }
+    }
+
+    async function saveEvents() {
+      localStorage.setItem('events', JSON.stringify(events));
+      try {
+        const snapshot = await db.collection('events').get();
+        const batch = db.batch();
+        snapshot.docs.forEach(doc => batch.delete(doc.ref));
+        await batch.commit();
+        
+        for (const event of events) {
+          await db.collection('events').add(event);
+        }
+        console.log("Events saved to Firestore!");
+      } catch (error) {
+        console.log("Failed to save events to Firestore:", error);
+      }
+    }
+
+    async function saveTasks() {
+      localStorage.setItem('tasks', JSON.stringify(tasks));
+      try {
+        const snapshot = await db.collection('tasks').get();
+        const batch = db.batch();
+        snapshot.docs.forEach(doc => batch.delete(doc.ref));
+        await batch.commit();
+        
+        for (const task of tasks) {
+          await db.collection('tasks').add(task);
+        }
+        console.log("Tasks saved to Firestore!");
+      } catch (error) {
+        console.log("Failed to save tasks to Firestore:", error);
+      }
+    }
+
+    // ---------------------------
+    // CALENDAR RENDERING
+    // ---------------------------
     function renderMonthCalendar(date, bodyEl, headerEl, isBackOffice = false) {
       const year = date.getFullYear();
       const month = date.getMonth();
@@ -1154,196 +1243,244 @@
       }
       bodyEl.appendChild(row);
     }
-    
-    // Render both calendars initially
-    renderMonthCalendar(currentDate, calendarBody, currentMonthYearEl);
-    renderMonthCalendar(backDate, backCalendarBody, backCurrentMonthYear, true);
 
-    // Front calendar nav
-    prevBtn.addEventListener('click', () => {
-      currentDate.setMonth(currentDate.getMonth() - 1);
-      renderMonthCalendar(currentDate, calendarBody, currentMonthYearEl);
-    });
+    // ---------------------------
+    // ADMIN LOGIN FUNCTIONALITY
+    // ---------------------------
+    function handleLogin(e) {
+      e.preventDefault();
+      console.log("Login attempted with password:", adminPwd.value);
+      
+      if (adminPwd.value === "2169") {
+        console.log("Login successful!");
+        adminModal.classList.remove('show');
+        mainPage.style.display = 'none';
+        backOfficeSection.style.display = 'flex';
+        startBackOfficeEmojiAnimation();
+      } else {
+        console.log("Login failed - incorrect password");
+        adminLoginMsg.style.display = 'block';
+      }
+    }
 
-    nextBtn.addEventListener('click', () => {
-      currentDate.setMonth(currentDate.getMonth() + 1);
-      renderMonthCalendar(currentDate, calendarBody, currentMonthYearEl);
-    });
+    function startBackOfficeEmojiAnimation() {
+      const backOfficeEmojis = ['🧩', '🎯', '✨', '🗓️', '✅', '💡', '🚀', '⭐', '❤️', '💼'];
+      let currentEmojiIndex = 0;
+      
+      if (backOfficeAnimatedEmoji) {
+        backOfficeAnimatedEmoji.style.animation = 'none';
+        backOfficeAnimatedEmoji.offsetHeight;
+      }
 
-    // Back calendar nav
-    prevBackBtn.addEventListener('click', () => {
-      backDate.setMonth(backDate.getMonth() - 1);
-      renderMonthCalendar(backDate, backCalendarBody, backCurrentMonthYear, true);
-    });
-    nextBackBtn.addEventListener('click', () => {
-      backDate.setMonth(backDate.getMonth() + 1);
-      renderMonthCalendar(backDate, backCalendarBody, backCurrentMonthYear, true);
-    });
+      setInterval(() => {
+        if (backOfficeAnimatedEmoji) {
+          backOfficeAnimatedEmoji.textContent = backOfficeEmojis[currentEmojiIndex];
+          backOfficeAnimatedEmoji.style.animation = 'none';
+          void backOfficeAnimatedEmoji.offsetWidth;
+          backOfficeAnimatedEmoji.style.animation = 'bounce-spin-shake 3s ease-in-out forwards';
+          currentEmojiIndex = (currentEmojiIndex + 1) % backOfficeEmojis.length;
+        }
+      }, 3000);
+    }
 
-    // Booking modal showing and form submission
+    // ---------------------------
+    // BOOKING FUNCTIONALITY
+    // ---------------------------
     function showBookingModal(date, appointmentIndex = -1) {
-        currentBookingDate = date;
-        bookingForm.dataset.editIndex = appointmentIndex;
+      currentBookingDate = date;
+      currentEditIndex = appointmentIndex;
+      
+      document.getElementById('bookingDateText').textContent = `Booking for: ${date}`;
+      bookingNameInput.value = '';
+      bookingPhoneInput.value = '';
+      bookingCommentsInput.value = '';
+      bookingReasonSelect.value = '';
+      otherReasonText.value = '';
+      otherReasonContainer.style.display = 'none';
+
+      if (appointmentIndex !== -1) {
+        const appointment = appointments[appointmentIndex];
+        bookingModalTitle.textContent = 'Edit Appointment';
+        document.getElementById('bookingDateText').textContent = `Edit appointment for: ${appointment.date}`;
         
-        document.getElementById('bookingDateText').textContent = `Booking for: ${date}`;
-        bookingNameInput.value = '';
-        bookingPhoneInput.value = '';
-        bookingEmailInput.value = '';
-        bookingCommentsInput.value = '';
-        bookingReasonSelect.value = '';
-        otherReasonText.value = '';
-        otherReasonContainer.style.display = 'none';
+        bookingNameInput.value = appointment.name;
+        bookingPhoneInput.value = appointment.phone;
+        bookingCommentsInput.value = appointment.comments || '';
 
-        if (appointmentIndex !== -1) {
-            const appointment = appointments[appointmentIndex];
-            bookingModalTitle.textContent = 'Edit Appointment';
-            document.getElementById('bookingDateText').textContent = `Edit appointment for: ${appointment.date}`;
-            
-            const dateInput = document.createElement('input');
-            dateInput.type = 'date';
-            dateInput.id = 'editAppointmentDate';
-            dateInput.value = appointment.date;
-            dateInput.style.marginBottom = '10px';
-            document.getElementById('bookingDateText').parentNode.insertBefore(dateInput, document.getElementById('bookingDateText').nextSibling);
-            
-            bookingNameInput.value = appointment.name;
-            bookingPhoneInput.value = appointment.phone;
-            bookingEmailInput.value = appointment.email || '';
-            bookingCommentsInput.value = appointment.comments || '';
-
-            const reasonInOptions = Array.from(bookingReasonSelect.options).some(o => o.value === appointment.reason);
-            if (reasonInOptions) {
-                bookingReasonSelect.value = appointment.reason;
-            } else {
-                bookingReasonSelect.value = 'other';
-                otherReasonContainer.style.display = 'block';
-                otherReasonText.value = appointment.reason;
-            }
-            
-            timeSlotsContainer.style.display = 'none';
-            bookingForm.style.display = 'block';
+        const reasonInOptions = Array.from(bookingReasonSelect.options).some(o => o.value === appointment.reason);
+        if (reasonInOptions) {
+          bookingReasonSelect.value = appointment.reason;
         } else {
-            bookingModalTitle.textContent = 'Book Appointment';
-            if(document.getElementById('editAppointmentDate')) {
-                document.getElementById('editAppointmentDate').remove();
-            }
-            timeSlotsContainer.innerHTML = '';
-            timeSlotsContainer.style.display = 'block';
-            bookingForm.style.display = 'none';
-    
-            const startTime = 9; // 9 AM
-            const endTime = 17; // 5 PM
-            const timeInterval = 30; // 30 minutes
-    
-            const dateBlocked = blockedDays.some(b => b.date === date && b.isAllDay);
-            if (dateBlocked) {
-                timeSlotsContainer.innerHTML = 'All day is blocked.';
-                return;
-            }
-    
-            const hoursBlocked = blockedDays.filter(b => b.date === date && !b.isAllDay);
-    
-            for (let h = startTime; h <= endTime; h++) {
-                for (let m = 0; m < 60; m += timeInterval) {
-                    const time = `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}`;
-                    
-                    const isTimeBlocked = hoursBlocked.some(b => {
-                        const start = b.startTime;
-                        const end = b.endTime;
-                        return time >= start && time < end;
-                    });
-                    
-                    const timeSlotEl = document.createElement('div');
-                    timeSlotEl.className = `time-slot ${isTimeBlocked ? 'blocked' : ''}`;
-                    timeSlotEl.textContent = time;
-                    timeSlotEl.dataset.time = time;
-                    
-                    if (!isTimeBlocked) {
-                        timeSlotEl.addEventListener('click', () => {
-                            currentBookingTime = time;
-                            playNotificationSound();
-                            alert(`You have selected an appointment for ${date} at ${time}. Please fill out the form.`);
-                            document.getElementById('bookingForm').style.display = 'block';
-                            appointmentDateInput.value = date;
-                            appointmentTimeInput.value = time;
-                            timeSlotsContainer.style.display = 'none';
-                            bookingFormContainer.scrollIntoView({ behavior: 'smooth' });
-                        });
-                    }
-                    
-                    timeSlotsContainer.appendChild(timeSlotEl);
-                }
-            }
+          bookingReasonSelect.value = 'other';
+          otherReasonContainer.style.display = 'block';
+          otherReasonText.value = appointment.reason;
+        }
+        
+        timeSlotsContainer.style.display = 'none';
+        bookingForm.style.display = 'block';
+      } else {
+        bookingModalTitle.textContent = 'Book Appointment';
+        timeSlotsContainer.innerHTML = '';
+        timeSlotsContainer.style.display = 'block';
+        bookingForm.style.display = 'none';
+
+        const startTime = 9;
+        const endTime = 17;
+        const timeInterval = 30;
+
+        const dateBlocked = blockedDays.some(b => b.date === date && b.isAllDay);
+        if (dateBlocked) {
+          timeSlotsContainer.innerHTML = 'All day is blocked.';
+          return;
         }
 
-        bookingModal.classList.add('show');
+        const hoursBlocked = blockedDays.filter(b => b.date === date && !b.isAllDay);
+
+        for (let h = startTime; h <= endTime; h++) {
+          for (let m = 0; m < 60; m += timeInterval) {
+            const time = `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}`;
+            
+            const isTimeBlocked = hoursBlocked.some(b => {
+              const start = b.startTime;
+              const end = b.endTime;
+              return time >= start && time < end;
+            });
+            
+            const timeSlotEl = document.createElement('div');
+            timeSlotEl.className = `time-slot ${isTimeBlocked ? 'blocked' : ''}`;
+            timeSlotEl.textContent = time;
+            timeSlotEl.dataset.time = time;
+            
+            if (!isTimeBlocked) {
+              timeSlotEl.addEventListener('click', () => {
+                currentBookingTime = time;
+                alert(`You have selected an appointment for ${date} at ${time}. Please fill out the form.`);
+                document.getElementById('bookingForm').style.display = 'block';
+                appointmentDateInput.value = date;
+                appointmentTimeInput.value = time;
+                timeSlotsContainer.style.display = 'none';
+                bookingFormContainer.scrollIntoView({ behavior: 'smooth' });
+              });
+            }
+            
+            timeSlotsContainer.appendChild(timeSlotEl);
+          }
+        }
+      }
+
+      bookingModal.classList.add('show');
     }
-    
-    bookingReasonSelect.addEventListener('change', (e) => {
-        if (e.target.value === 'other') {
-            otherReasonContainer.style.display = 'block';
-            otherReasonText.setAttribute('required', 'required');
-        } else {
-            otherReasonContainer.style.display = 'none';
-            otherReasonText.removeAttribute('required');
-        }
+
+    bookingForm.addEventListener('submit', async function(e) {
+      e.preventDefault();
+      
+      const name = bookingNameInput.value;
+      const phone = bookingPhoneInput.value;
+      const comments = bookingCommentsInput.value;
+      let reason = bookingReasonSelect.value;
+      
+      if (reason === 'other') {
+        reason = otherReasonText.value;
+      }
+
+      if (currentEditIndex !== -1) {
+        // Editing existing appointment
+        appointments[currentEditIndex] = { 
+          date: appointments[currentEditIndex].date, 
+          time: appointments[currentEditIndex].time, 
+          name, phone, reason, comments, 
+          completed: appointments[currentEditIndex].completed 
+        };
+        alert("Appointment has been successfully updated!");
+      } else {
+        // New appointment
+        appointments.push({
+          date: appointmentDateInput.value, 
+          time: appointmentTimeInput.value, 
+          name, phone, reason, comments, 
+          completed: false
+        });
+        alert("New Appointment Booked! We will contact you soon.");
+      }
+      
+      await saveAppointments();
+      bookingModal.classList.remove('show');
+      renderMonthCalendar(currentDate, calendarBody, currentMonthYearEl);
+      currentEditIndex = -1;
     });
 
-    closeBookingModal.addEventListener('click', () => {
-        bookingModal.classList.remove('show');
-        if(document.getElementById('editAppointmentDate')) {
-            document.getElementById('editAppointmentDate').remove();
-        }
-    });
-    
-    bookingForm.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        
-        const editIndex = bookingForm.dataset.editIndex;
-        let bookingDate;
-        let bookingTime;
-        if(editIndex !== "-1") {
-            bookingDate = document.getElementById('editAppointmentDate').value;
-            bookingTime = appointments[editIndex].time;
+    // ---------------------------
+    // EVENT AND TASK EDITING FUNCTIONALITY
+    // ---------------------------
+    function showEditEventModal(index) {
+      const event = events[index];
+      eventDateInput.value = event.date;
+      eventText.value = event.reason;
+      eventModalTitle.textContent = 'Edit Event';
+      eventSubmitBtn.textContent = 'Update Event';
+      currentEditIndex = index;
+      currentEditType = 'events';
+      eventModal.classList.add('show');
+    }
+
+    function showEditTaskModal(index) {
+      const task = tasks[index];
+      taskDateInput.value = task.date;
+      taskTextSelect.value = task.text;
+      taskModalTitle.textContent = 'Edit Task';
+      taskSubmitBtn.textContent = 'Update Task';
+      currentEditIndex = index;
+      currentEditType = 'tasks';
+      taskModal.classList.add('show');
+    }
+
+    addEventForm.addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const date = eventDateInput.value;
+      const reason = eventText.value;
+
+      if (date && reason) {
+        if (currentEditIndex !== -1 && currentEditType === 'events') {
+          events[currentEditIndex] = { date, reason, completed: events[currentEditIndex].completed };
         } else {
-            bookingDate = appointmentDateInput.value;
-            bookingTime = appointmentTimeInput.value;
+          events.push({ date, reason, completed: false });
         }
-
-        const name = bookingNameInput.value;
-        const phone = bookingPhoneInput.value;
-        const email = bookingEmailInput.value;
-        const comments = bookingCommentsInput.value;
-        let reason = bookingReasonSelect.value;
-        
-        if (reason === 'other') {
-            reason = otherReasonText.value;
-        }
-
-        if (editIndex !== "-1") {
-            appointments[editIndex] = { date: bookingDate, time: bookingTime, name, phone, email, reason, comments, completed: appointments[editIndex].completed };
-            alert("Appointment has been successfully updated!");
-        } else {
-            appointments.push({date: bookingDate, time: bookingTime, name, phone, email, reason, comments, completed: false});
-            alert("New Appointment Booked! We will contact you soon.");
-        }
-        
-        await saveToFirebase('appointments', appointments);
-
-        bookingModal.classList.remove('show');
+        await saveEvents();
+        eventModal.classList.remove('show');
         renderMonthCalendar(currentDate, calendarBody, currentMonthYearEl);
+        renderMonthCalendar(backDate, backCalendarBody, backCurrentMonthYear, true);
+        alert(currentEditIndex !== -1 ? "Event has been updated!" : "Event has been added!");
+        hideAllLists();
+        currentEditIndex = -1;
+        currentEditType = '';
+      }
     });
 
-    // Helper function to hide all lists and content container
-    function hideAllLists() {
-      appointmentsList.style.display = 'none';
-      eventsList.style.display = 'none';
-      tasksList.style.display = 'none';
-      blockedDaysList.style.display = 'none';
-      saveAllContainer.style.display = 'none';
-    }
+    addTaskForm.addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const taskText = taskTextSelect.value;
+      const date = taskDateInput.value;
 
-    // Render lists with new dropdown functionality
+      if (taskText && date) {
+        if (currentEditIndex !== -1 && currentEditType === 'tasks') {
+          tasks[currentEditIndex] = { text: taskText, date, completed: tasks[currentEditIndex].completed };
+        } else {
+          tasks.push({ text: taskText, date, completed: false });
+        }
+        await saveTasks();
+        taskModal.classList.remove('show');
+        renderMonthCalendar(currentDate, calendarBody, currentMonthYearEl);
+        renderMonthCalendar(backDate, backCalendarBody, backCurrentMonthYear, true);
+        alert(currentEditIndex !== -1 ? "Task has been updated!" : "Task has been added!");
+        hideAllLists();
+        currentEditIndex = -1;
+        currentEditType = '';
+      }
+    });
+
+    // ---------------------------
+    // RENDERING FUNCTIONS FOR LISTS
+    // ---------------------------
     function renderAppointments() {
       appointmentsList.innerHTML = '';
       if (appointments.length === 0) {
@@ -1354,7 +1491,7 @@
         const li = document.createElement('li');
         li.classList.add('blocked-day-item');
         li.innerHTML = `
-          <span>${app.date} - ${app.reason} (${app.name}) ${app.completed ? ' ✅' : ''}</span>
+          <span>${app.date} ${app.time ? 'at ' + app.time : ''} - ${app.reason} (${app.name}) ${app.completed ? ' ✅' : ''}</span>
           <select onchange="handleAction(this.value, 'appointments', ${index})">
             <option value="">Actions</option>
             <option value="complete">Complete</option>
@@ -1387,7 +1524,7 @@
         eventsList.appendChild(li);
       });
     }
-    
+
     function renderTasks() {
       tasksList.innerHTML = '';
       if (tasks.length === 0) {
@@ -1427,9 +1564,12 @@
       });
     }
 
+    // ---------------------------
+    // ACTION HANDLERS
+    // ---------------------------
     window.unblockDay = async function(index) {
       blockedDays.splice(index, 1);
-      await saveToFirebase('blockedDays', blockedDays);
+      await saveBlockedDays();
       renderBlockedDays();
       renderMonthCalendar(currentDate, calendarBody, currentMonthYearEl);
       renderMonthCalendar(backDate, backCalendarBody, backCurrentMonthYear, true);
@@ -1450,21 +1590,11 @@
         hideAllLists();
       } else if (action === 'edit') {
         if (type === 'appointments') {
-            showBookingModal(appointments[index].date, index);
-        }
-        if (type === 'events') {
-            const eventToEdit = events[index];
-            eventDateInput.value = eventToEdit.date;
-            eventText.value = eventToEdit.reason;
-            eventModal.dataset.editIndex = index;
-            eventModal.classList.add('show');
-        }
-        if (type === 'tasks') {
-            const taskToEdit = tasks[index];
-            taskDateInput.value = taskToEdit.date;
-            taskTextSelect.value = taskToEdit.text;
-            taskModal.dataset.editIndex = index;
-            taskModal.classList.add('show');
+          showBookingModal(appointments[index].date, index);
+        } else if (type === 'events') {
+          showEditEventModal(index);
+        } else if (type === 'tasks') {
+          showEditTaskModal(index);
         }
       }
       
@@ -1472,236 +1602,246 @@
       if (type === 'events') renderEvents();
       if (type === 'tasks') renderTasks();
     };
-    
-    saveAllBtn.addEventListener('click', async () => {
-      await saveToFirebase('appointments', appointments);
-      await saveToFirebase('events', events);
-      await saveToFirebase('tasks', tasks);
-      alert("All changes have been saved!");
-      renderMonthCalendar(currentDate, calendarBody, currentMonthYearEl);
-      renderMonthCalendar(backDate, backCalendarBody, backCurrentMonthYear, true);
-      hideAllLists();
-    });
 
-    exitDetailsBtn.addEventListener('click', () => {
-        hideAllLists();
-    });
+    // ---------------------------
+    // HELPER FUNCTIONS
+    // ---------------------------
+    function hideAllLists() {
+      appointmentsList.style.display = 'none';
+      eventsList.style.display = 'none';
+      tasksList.style.display = 'none';
+      blockedDaysList.style.display = 'none';
+      saveAllContainer.style.display = 'none';
+    }
 
-    // LOGIN
-    function handleLogin(e) {
-      e.preventDefault();
-      if (adminPwd.value === "2169") {
-        adminModal.classList.remove('show');
-        mainPage.style.display = 'none';
-        backOfficeSection.style.display = 'flex';
-        startBackOfficeEmojiAnimation();
-      } else {
-        adminLoginMsg.style.display = 'block';
+    async function saveAllData() {
+      try {
+        await saveBlockedDays();
+        await saveAppointments();
+        await saveEvents();
+        await saveTasks();
+        alert("All changes have been permanently saved!");
+      } catch (error) {
+        console.error("Error saving all data:", error);
+        alert("Data saved locally, but there was an issue with cloud storage.");
       }
     }
-    loginForm.addEventListener('submit', handleLogin);
-    adminLoginBtn.addEventListener('click', function() {
-      adminModal.classList.add('show');
-      adminPwd.value = '';
-      adminLoginMsg.style.display = 'none';
-    });
-    closeAdminModal.addEventListener('click', function() {
-      adminModal.classList.remove('show');
-    });
 
-    // Go back to main calendar
-    goBackBtn.addEventListener('click', function() {
-      backOfficeSection.style.display = 'none';
-      mainPage.style.display = 'flex';
-      renderMonthCalendar(currentDate, calendarBody, currentMonthYearEl);
-    });
-
-    // Block modal behavior
-    blockDaysBtn.addEventListener('click', function() {
-      hideAllLists();
-      blockModal.classList.add('show');
-    });
-    
-    unblockDaysBtn.addEventListener('click', function() {
-      hideAllLists();
-      blockedDaysList.style.display = 'block';
-      saveAllContainer.style.display = 'flex';
-      renderBlockedDays();
-    });
-    
-    closeBlockModal.addEventListener('click', function() {
-      blockModal.classList.remove('show');
-    });
-    isAllDayCheckbox.addEventListener('change', function() {
-      timeRangeContainer.style.display = this.checked ? 'none' : 'block';
-    });
-    addBlockBtn.addEventListener('click', async function() {
-      const date = blockDateInput.value;
-      const reason = blockReasonInput.value || 'Blocked';
-      const isAllDay = isAllDayCheckbox.checked;
-
-      if (date) {
-        if (!isAllDay) {
-          const startTime = blockStartTimeInput.value;
-          const endTime = blockEndTimeInput.value;
-          if (startTime && endTime) {
-            blockedDays.push({ date, reason: `${reason} (${startTime}-${endTime})`, startTime, endTime, isAllDay: false });
-          } else {
-            alert('Please select a start and end time.');
-            return;
-          }
-        } else {
-          blockedDays.push({ date, reason: `${reason} (All Day)`, isAllDay: true });
-        }
-        await saveToFirebase('blockedDays', blockedDays);
-        renderMonthCalendar(currentDate, calendarBody, currentMonthYearEl);
-        renderMonthCalendar(backDate, backCalendarBody, backCurrentMonthYear, true);
-        blockModal.classList.remove('show');
-        alert("Day/Hours have been successfully blocked!");
-      }
-    });
-    
-    // Add Event behavior
-    addEventsBtn.addEventListener('click', function() {
-      hideAllLists();
-      eventModal.classList.add('show');
-      eventModal.dataset.editIndex = '';
-      eventDateInput.value = '';
-      eventText.value = '';
-    });
-    closeEventModal.addEventListener('click', function() {
-      eventModal.classList.remove('show');
-    });
-    addEventForm.addEventListener('submit', async function(e) {
-      e.preventDefault();
-      const date = eventDateInput.value;
-      const reason = eventText.value;
-      const editIndex = eventModal.dataset.editIndex;
-
-      if (date && reason) {
-        if (editIndex !== '') {
-            events[editIndex] = { date, reason, completed: events[editIndex].completed };
-        } else {
-            events.push({ date, reason, completed: false });
-        }
-        await saveToFirebase('events', events);
-        renderEvents();
-        eventModal.classList.remove('show');
-        renderMonthCalendar(currentDate, calendarBody, currentMonthYearEl);
-        renderMonthCalendar(backDate, backCalendarBody, backCurrentMonthYear, true);
-        alert("Event has been successfully saved!");
-        hideAllLists();
-      }
-    });
-
-    // Add Task behavior
-    addTasksBtn.addEventListener('click', function() {
-      hideAllLists();
-      taskModal.classList.add('show');
-      taskModal.dataset.editIndex = '';
-      taskDateInput.value = '';
-      taskTextSelect.value = '';
-    });
-    closeTaskModal.addEventListener('click', function() {
-      taskModal.classList.remove('show');
-    });
-    addTaskForm.addEventListener('submit', async function(e) {
-      e.preventDefault();
-      const taskText = taskTextSelect.value;
-      const date = taskDateInput.value;
-      const editIndex = taskModal.dataset.editIndex;
-
-      if (taskText && date) {
-        if (editIndex !== '') {
-            tasks[editIndex] = { text: taskText, date, completed: tasks[editIndex].completed };
-        } else {
-            tasks.push({ text: taskText, date, completed: false });
-        }
-        await saveToFirebase('tasks', tasks);
-        renderTasks();
-        taskModal.classList.remove('show');
-        renderMonthCalendar(currentDate, calendarBody, currentMonthYearEl);
-        renderMonthCalendar(backDate, backCalendarBody, backCurrentMonthYear, true);
-        alert("Task has been successfully saved!");
-        hideAllLists();
-      }
-    });
-
-    // View Events / Tasks / Appointments buttons
-    viewAppointmentsBtn.addEventListener('click', () => {
-      hideAllLists();
-      appointmentsList.style.display = 'block';
-      saveAllContainer.style.display = 'flex';
-      renderAppointments();
-    });
-
-    viewEventsBtn.addEventListener('click', () => {
-      hideAllLists();
-      eventsList.style.display = 'block';
-      saveAllContainer.style.display = 'flex';
-      renderEvents();
-    });
-
-    viewTasksBtn.addEventListener('click', () => {
-      hideAllLists();
-      tasksList.style.display = 'block';
-      saveAllContainer.style.display = 'flex';
-      renderTasks();
-    });
-
-    // Dismiss modals on background click or Esc
-    Array.from(document.querySelectorAll('.modal')).forEach(function(modal) {
-      modal.addEventListener('click', function(e) {
-        if (e.target === modal) modal.classList.remove("show");
-      });
-    });
-
-    document.addEventListener('keydown', function(e) {
-      if (e.key === 'Escape') {
-        document.getElementById('adminModal').classList.remove("show");
-        document.getElementById('bookingModal').classList.remove("show");
-        document.getElementById('blockModal').classList.remove("show");
-        document.getElementById('taskModal').classList.remove("show");
-        document.getElementById('eventModal').classList.remove("show");
-      }
-    });
-
-    // Front-end emoji animation
     function startFrontendEmojiAnimation() {
-        const emojis = ['🧩', '🎯', '📅', '🗓️', '📝', '⏰', '🔔', '💡', '⭐', '❤️'];
-        let emojiIndex = 0;
+      const emojis = ['🧩', '🎯', '📝', '🗓️', '🔒', '⏰', '🔓', '💡', '⭐', '❤️'];
+      let emojiIndex = 0;
 
-        setInterval(() => {
-            animatedEmoji.textContent = emojis[emojiIndex];
-            animatedEmoji.style.animation = 'none'; 
-            animatedEmoji.offsetHeight; 
-            animatedEmoji.style.animation = null; 
-            emojiIndex = (emojiIndex + 1) % emojis.length;
-        }, 2000); 
-    }
-    
-    // Back-office banner emoji animation
-    function startBackOfficeEmojiAnimation() {
-        const backOfficeEmojis = ['🧩', '🎯', '✨', '🗓️', '✅', '💡', '🚀', '⭐', '❤️', '💼'];
-        let currentEmojiIndex = 0;
-        
-        if (backOfficeAnimatedEmoji) {
-            backOfficeAnimatedEmoji.style.animation = 'none';
-            backOfficeAnimatedEmoji.offsetHeight;
+      setInterval(() => {
+        if (animatedEmoji) {
+          animatedEmoji.textContent = emojis[emojiIndex];
+          animatedEmoji.style.animation = 'none'; 
+          animatedEmoji.offsetHeight; 
+          animatedEmoji.style.animation = null; 
+          emojiIndex = (emojiIndex + 1) % emojis.length;
         }
-
-        setInterval(() => {
-            backOfficeAnimatedEmoji.textContent = backOfficeEmojis[currentEmojiIndex];
-            backOfficeAnimatedEmoji.style.animation = 'none';
-            void backOfficeAnimatedEmoji.offsetWidth;
-            backOfficeAnimatedEmoji.style.animation = 'bounce-spin-shake 3s ease-in-out forwards';
-            currentEmojiIndex = (currentEmojiIndex + 1) % backOfficeEmojis.length;
-        }, 3000);
+      }, 2000);
     }
 
-    // Initial render calls
-    renderMonthCalendar(currentDate, calendarBody, currentMonthYearEl);
-    renderMonthCalendar(backDate, backCalendarBody, backCurrentMonthYear, true);
+    // ---------------------------
+    // EVENT LISTENER INITIALIZATION
+    // ---------------------------
+    document.addEventListener('DOMContentLoaded', function() {
+      console.log("DOM loaded, initializing calendar...");
+      loadAllData();
+      
+      // Calendar navigation
+      prevBtn.addEventListener('click', () => {
+        currentDate.setMonth(currentDate.getMonth() - 1);
+        renderMonthCalendar(currentDate, calendarBody, currentMonthYearEl);
+      });
+
+      nextBtn.addEventListener('click', () => {
+        currentDate.setMonth(currentDate.getMonth() + 1);
+        renderMonthCalendar(currentDate, calendarBody, currentMonthYearEl);
+      });
+
+      prevBackBtn.addEventListener('click', () => {
+        backDate.setMonth(backDate.getMonth() - 1);
+        renderMonthCalendar(backDate, backCalendarBody, backCurrentMonthYear, true);
+      });
+
+      nextBackBtn.addEventListener('click', () => {
+        backDate.setMonth(backDate.getMonth() + 1);
+        renderMonthCalendar(backDate, backCalendarBody, backCurrentMonthYear, true);
+      });
+
+      // Admin login
+      adminLoginBtn.addEventListener('click', function() {
+        console.log("Admin login button clicked");
+        adminModal.classList.add('show');
+        adminPwd.value = '';
+        adminLoginMsg.style.display = 'none';
+      });
+
+      loginForm.addEventListener('submit', handleLogin);
+
+      closeAdminModal.addEventListener('click', function() {
+        adminModal.classList.remove('show');
+      });
+
+      // Back office navigation
+      goBackBtn.addEventListener('click', function() {
+        backOfficeSection.style.display = 'none';
+        mainPage.style.display = 'flex';
+        renderMonthCalendar(currentDate, calendarBody, currentMonthYearEl);
+      });
+
+      // Block functionality
+      blockDaysBtn.addEventListener('click', function() {
+        hideAllLists();
+        blockModal.classList.add('show');
+      });
+      
+      unblockDaysBtn.addEventListener('click', function() {
+        hideAllLists();
+        blockedDaysList.style.display = 'block';
+        saveAllContainer.style.display = 'flex';
+        renderBlockedDays();
+      });
+      
+      closeBlockModal.addEventListener('click', function() {
+        blockModal.classList.remove('show');
+      });
+
+      isAllDayCheckbox.addEventListener('change', function() {
+        timeRangeContainer.style.display = this.checked ? 'none' : 'block';
+      });
+
+      addBlockBtn.addEventListener('click', async function() {
+        const date = blockDateInput.value;
+        const reason = blockReasonInput.value || 'Blocked';
+        const isAllDay = isAllDayCheckbox.checked;
+
+        if (date) {
+          if (!isAllDay) {
+            const startTime = blockStartTimeInput.value;
+            const endTime = blockEndTimeInput.value;
+            if (startTime && endTime) {
+              blockedDays.push({ date, reason: `${reason} (${startTime}-${endTime})`, startTime, endTime, isAllDay: false });
+            } else {
+              alert('Please select a start and end time.');
+              return;
+            }
+          } else {
+            blockedDays.push({ date, reason: `${reason} (All Day)`, isAllDay: true });
+          }
+          
+          await saveBlockedDays();
+          
+          renderMonthCalendar(currentDate, calendarBody, currentMonthYearEl);
+          renderMonthCalendar(backDate, backCalendarBody, backCurrentMonthYear, true);
+          blockModal.classList.remove('show');
+          alert("Day/Hours have been permanently blocked!");
+        }
+      });
+
+      // Event functionality
+      addEventsBtn.addEventListener('click', function() {
+        hideAllLists();
+        eventModalTitle.textContent = 'Add New Event';
+        eventSubmitBtn.textContent = 'Add Event';
+        currentEditIndex = -1;
+        currentEditType = '';
+        eventDateInput.value = '';
+        eventText.value = '';
+        eventModal.classList.add('show');
+      });
+
+      closeEventModal.addEventListener('click', function() {
+        eventModal.classList.remove('show');
+      });
+
+      // Task functionality
+      addTasksBtn.addEventListener('click', function() {
+        hideAllLists();
+        taskModalTitle.textContent = 'Add New Task';
+        taskSubmitBtn.textContent = 'Add Task';
+        currentEditIndex = -1;
+        currentEditType = '';
+        taskDateInput.value = '';
+        taskTextSelect.value = '';
+        taskModal.classList.add('show');
+      });
+
+      closeTaskModal.addEventListener('click', function() {
+        taskModal.classList.remove('show');
+      });
+
+      // View buttons
+      viewAppointmentsBtn.addEventListener('click', () => {
+        hideAllLists();
+        appointmentsList.style.display = 'block';
+        saveAllContainer.style.display = 'flex';
+        renderAppointments();
+      });
+
+      viewEventsBtn.addEventListener('click', () => {
+        hideAllLists();
+        eventsList.style.display = 'block';
+        saveAllContainer.style.display = 'flex';
+        renderEvents();
+      });
+
+      viewTasksBtn.addEventListener('click', () => {
+        hideAllLists();
+        tasksList.style.display = 'block';
+        saveAllContainer.style.display = 'flex';
+        renderTasks();
+      });
+
+      // Save all button
+      saveAllBtn.addEventListener('click', async function() {
+        await saveAllData();
+        renderMonthCalendar(currentDate, calendarBody, currentMonthYearEl);
+        renderMonthCalendar(backDate, backCalendarBody, backCurrentMonthYear, true);
+        hideAllLists();
+      });
+
+      exitDetailsBtn.addEventListener('click', function() {
+        hideAllLists();
+      });
+
+      // Modal background close
+      Array.from(document.querySelectorAll('.modal')).forEach(function(modal) {
+        modal.addEventListener('click', function(e) {
+          if (e.target === modal) modal.classList.remove("show");
+        });
+      });
+
+      // Escape key to close modals
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+          document.querySelectorAll('.modal').forEach(modal => modal.classList.remove("show"));
+        }
+      });
+
+      // Other reason dropdown
+      bookingReasonSelect.addEventListener('change', (e) => {
+        if (e.target.value === 'other') {
+          otherReasonContainer.style.display = 'block';
+          otherReasonText.setAttribute('required', 'required');
+        } else {
+          otherReasonContainer.style.display = 'none';
+          otherReasonText.removeAttribute('required');
+        }
+      });
+
+      closeBookingModal.addEventListener('click', () => {
+        bookingModal.classList.remove('show');
+        currentEditIndex = -1;
+      });
+
+      // Start animations
+      startFrontendEmojiAnimation();
+      
+      console.log("Calendar and admin login initialized successfully!");
+    });
+
   </script>
 </body>
 </html>
