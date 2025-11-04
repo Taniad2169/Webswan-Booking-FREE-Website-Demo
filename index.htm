@@ -322,7 +322,8 @@
       margin-top: 6px;
     }
     .modal-content input,
-    .modal-content select {
+    .modal-content select,
+    .modal-content textarea {
       width: 100%;
       padding: 8px 10px;
       font-size: 1em;
@@ -734,6 +735,43 @@
       color: #721c24;
       border: 1px solid #f5c6cb;
     }
+
+    /* Appointments list styles */
+    .appointment-item {
+      padding: 15px;
+      margin-bottom: 10px;
+      border: 2px solid #2290ab;
+      border-radius: 8px;
+      background: #fff;
+    }
+    
+    .appointment-item.completed {
+      background: #f0fff0;
+      border-color: #28a745;
+    }
+    
+    .appointment-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      min-width: 120px;
+    }
+    
+    .appointment-actions select {
+      padding: 5px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+    }
+    
+    .quick-edit-btn {
+      padding: 5px 8px;
+      background: #2290ab;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.8em;
+    }
     
   </style>
 </head>
@@ -1129,6 +1167,179 @@
       }
     }
 
+    // Function to remove duplicates from arrays
+    function removeDuplicates() {
+      console.log("Checking for duplicates...");
+      
+      // Remove duplicate appointments
+      const uniqueAppointments = [];
+      const appointmentKeys = new Set();
+      
+      appointments.forEach(app => {
+        const key = `${app.date}-${app.time}-${app.name}-${app.phone}`;
+        if (!appointmentKeys.has(key)) {
+          appointmentKeys.add(key);
+          uniqueAppointments.push(app);
+        }
+      });
+      
+      if (appointments.length !== uniqueAppointments.length) {
+        console.log(`Removed ${appointments.length - uniqueAppointments.length} duplicate appointments`);
+        appointments.length = 0;
+        appointments.push(...uniqueAppointments);
+      }
+      
+      // Remove duplicate events
+      const uniqueEvents = [];
+      const eventKeys = new Set();
+      
+      events.forEach(event => {
+        const key = `${event.date}-${event.time}-${event.reason}`;
+        if (!eventKeys.has(key)) {
+          eventKeys.add(key);
+          uniqueEvents.push(event);
+        }
+      });
+      
+      if (events.length !== uniqueEvents.length) {
+        console.log(`Removed ${events.length - uniqueEvents.length} duplicate events`);
+        events.length = 0;
+        events.push(...uniqueEvents);
+      }
+      
+      // Remove duplicate tasks
+      const uniqueTasks = [];
+      const taskKeys = new Set();
+      
+      tasks.forEach(task => {
+        const key = `${task.date}-${task.time}-${task.text}`;
+        if (!taskKeys.has(key)) {
+          taskKeys.add(key);
+          uniqueTasks.push(task);
+        }
+      });
+      
+      if (tasks.length !== uniqueTasks.length) {
+        console.log(`Removed ${tasks.length - uniqueTasks.length} duplicate tasks`);
+        tasks.length = 0;
+        tasks.push(...uniqueTasks);
+      }
+      
+      // Remove duplicate blocked days
+      const uniqueBlockedDays = [];
+      const blockedKeys = new Set();
+      
+      blockedDays.forEach(day => {
+        const key = `${day.date}-${day.startTime || ''}-${day.endTime || ''}-${day.isAllDay}`;
+        if (!blockedKeys.has(key)) {
+          blockedKeys.add(key);
+          uniqueBlockedDays.push(day);
+        }
+      });
+      
+      if (blockedDays.length !== uniqueBlockedDays.length) {
+        console.log(`Removed ${blockedDays.length - uniqueBlockedDays.length} duplicate blocked days`);
+        blockedDays.length = 0;
+        blockedDays.push(...uniqueBlockedDays);
+      }
+    }
+
+    // Fixed Load from Firestore - No Duplication
+    async function loadFromFirestore() {
+      try {
+        console.log("Trying to load from Firestore...");
+        
+        // Clear existing arrays first to prevent duplication
+        const tempBlockedDays = [];
+        const tempAppointments = [];
+        const tempEvents = [];
+        const tempTasks = [];
+        
+        // Load from Firestore into temporary arrays
+        const blockedDaysSnapshot = await db.collection('blockedDays').get();
+        if (!blockedDaysSnapshot.empty) {
+          blockedDaysSnapshot.docs.forEach(doc => tempBlockedDays.push(doc.data()));
+        }
+        
+        const appointmentsSnapshot = await db.collection('appointments').get();
+        if (!appointmentsSnapshot.empty) {
+          appointmentsSnapshot.docs.forEach(doc => tempAppointments.push(doc.data()));
+        }
+        
+        const eventsSnapshot = await db.collection('events').get();
+        if (!eventsSnapshot.empty) {
+          eventsSnapshot.docs.forEach(doc => tempEvents.push(doc.data()));
+        }
+        
+        const tasksSnapshot = await db.collection('tasks').get();
+        if (!tasksSnapshot.empty) {
+          tasksSnapshot.docs.forEach(doc => tempTasks.push(doc.data()));
+        }
+        
+        // Only update if we got data from Firestore
+        if (tempBlockedDays.length > 0 || tempAppointments.length > 0 || tempEvents.length > 0 || tempTasks.length > 0) {
+          console.log("Updating with Firestore data...");
+          
+          // Replace arrays instead of merging
+          if (tempBlockedDays.length > 0) {
+            blockedDays.length = 0;
+            blockedDays.push(...tempBlockedDays);
+            localStorage.setItem('blockedDays', JSON.stringify(blockedDays));
+          }
+          
+          if (tempAppointments.length > 0) {
+            appointments.length = 0;
+            appointments.push(...tempAppointments);
+            localStorage.setItem('appointments', JSON.stringify(appointments));
+          }
+          
+          if (tempEvents.length > 0) {
+            events.length = 0;
+            events.push(...tempEvents);
+            localStorage.setItem('events', JSON.stringify(events));
+          }
+          
+          if (tempTasks.length > 0) {
+            tasks.length = 0;
+            tasks.push(...tempTasks);
+            localStorage.setItem('tasks', JSON.stringify(tasks));
+          }
+          
+          console.log("Firestore data loaded successfully without duplication!");
+          
+          // Re-render with Firestore data
+          renderMonthCalendar(currentDate, calendarBody, currentMonthYearEl);
+          renderMonthCalendar(backDate, backCalendarBody, backCurrentMonthYear, true);
+        } else {
+          console.log("No Firestore data found, using localStorage only");
+        }
+        
+      } catch (error) {
+        console.log("Using localStorage data only:", error);
+      }
+    }
+
+    // SIMPLIFIED: Load data from localStorage first, then try Firestore
+    function loadAllData() {
+      console.log("Loading data...");
+      
+      // Try localStorage first for immediate display
+      blockedDays = JSON.parse(localStorage.getItem('blockedDays')) || [];
+      tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+      appointments = JSON.parse(localStorage.getItem('appointments')) || [];
+      events = JSON.parse(localStorage.getItem('events')) || [];
+      
+      // Remove any duplicates that might exist
+      removeDuplicates();
+      
+      // Render calendar immediately
+      renderMonthCalendar(currentDate, calendarBody, currentMonthYearEl);
+      renderMonthCalendar(backDate, backCalendarBody, backCurrentMonthYear, true);
+      
+      // Then try to load from Firestore in background
+      loadFromFirestore();
+    }
+
     // Helper function to save appointment locally
     function saveAppointmentLocally(name, email, phone, reason, comments) {
       if (currentEditIndex !== -1) {
@@ -1198,62 +1409,206 @@
       }
     }
 
-    // SIMPLIFIED: Load data from localStorage first, then try Firestore
-    function loadAllData() {
-      console.log("Loading data...");
+    // Enhanced Appointments Rendering with Edit Capability
+    function renderAppointments() {
+      appointmentsList.innerHTML = '';
+      if (appointments.length === 0) {
+        appointmentsList.innerHTML = '<li style="padding: 20px; text-align: center; color: #666;">No appointments booked yet.</li>';
+        return;
+      }
       
-      // Try localStorage first for immediate display
-      blockedDays = JSON.parse(localStorage.getItem('blockedDays')) || [];
-      tasks = JSON.parse(localStorage.getItem('tasks')) || [];
-      appointments = JSON.parse(localStorage.getItem('appointments')) || [];
-      events = JSON.parse(localStorage.getItem('events')) || [];
+      // Sort appointments by date and time (newest first)
+      const sortedAppointments = [...appointments].sort((a, b) => {
+        const dateA = new Date(a.date + ' ' + a.time);
+        const dateB = new Date(b.date + ' ' + b.time);
+        return dateA - dateB;
+      });
       
-      // Render calendar immediately
-      renderMonthCalendar(currentDate, calendarBody, currentMonthYearEl);
-      renderMonthCalendar(backDate, backCalendarBody, backCurrentMonthYear, true);
-      
-      // Then try to load from Firestore in background
-      loadFromFirestore();
+      sortedAppointments.forEach((app, index) => {
+        const li = document.createElement('li');
+        li.classList.add('appointment-item');
+        if (app.completed) {
+          li.classList.add('completed');
+        }
+        
+        li.innerHTML = `
+          <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+            <div style="flex: 1;">
+              <div style="font-weight: bold; color: #2290ab; margin-bottom: 8px; font-size: 1.1em;">
+                📅 ${app.date} at ⏰ ${app.time}
+              </div>
+              <div style="margin-bottom: 5px;">
+                <strong>👤 ${app.name}</strong>
+              </div>
+              <div style="margin-bottom: 5px;">
+                <strong>📧 ${app.email || 'No email'}</strong>
+              </div>
+              <div style="margin-bottom: 5px;">
+                <strong>📞 ${app.phone}</strong>
+              </div>
+              <div style="margin-bottom: 5px;">
+                <strong>🎯 ${app.reason}</strong>
+              </div>
+              ${app.comments ? `<div style="margin-bottom: 5px; font-style: italic; background: #f8f9fa; padding: 8px; border-radius: 4px;">💬 "${app.comments}"</div>` : ''}
+              <div style="font-size: 0.9em; color: #666; margin-top: 8px; padding: 5px; background: ${app.completed ? '#d4edda' : '#fff3cd'}; border-radius: 4px;">
+                Status: ${app.completed ? '✅ Completed' : '⏳ Pending'}
+              </div>
+            </div>
+            <div class="appointment-actions">
+              <select onchange="handleAppointmentAction(this.value, ${index})">
+                <option value="">Actions</option>
+                <option value="edit">✏️ Edit</option>
+                <option value="complete">✅ Complete</option>
+                <option value="incomplete">🔄 Mark Pending</option>
+                <option value="delete">🗑️ Delete</option>
+              </select>
+              <button class="quick-edit-btn" onclick="quickEditAppointment(${index})">
+                Quick Edit
+              </button>
+            </div>
+          </div>
+        `;
+        appointmentsList.appendChild(li);
+      });
     }
 
-    // Load from Firestore (non-blocking)
-    async function loadFromFirestore() {
-      try {
-        console.log("Trying to load from Firestore...");
-        
-        const blockedDaysSnapshot = await db.collection('blockedDays').get();
-        if (!blockedDaysSnapshot.empty) {
-          blockedDays = blockedDaysSnapshot.docs.map(doc => doc.data());
-          localStorage.setItem('blockedDays', JSON.stringify(blockedDays));
-        }
-        
-        const appointmentsSnapshot = await db.collection('appointments').get();
-        if (!appointmentsSnapshot.empty) {
-          appointments = appointmentsSnapshot.docs.map(doc => doc.data());
-          localStorage.setItem('appointments', JSON.stringify(appointments));
-        }
-        
-        const eventsSnapshot = await db.collection('events').get();
-        if (!eventsSnapshot.empty) {
-          events = eventsSnapshot.docs.map(doc => doc.data());
-          localStorage.setItem('events', JSON.stringify(events));
-        }
-        
-        const tasksSnapshot = await db.collection('tasks').get();
-        if (!tasksSnapshot.empty) {
-          tasks = tasksSnapshot.docs.map(doc => doc.data());
-          localStorage.setItem('tasks', JSON.stringify(tasks));
-        }
-        
-        console.log("Firestore data loaded successfully!");
-        // Re-render with Firestore data
-        renderMonthCalendar(currentDate, calendarBody, currentMonthYearEl);
-        renderMonthCalendar(backDate, backCalendarBody, backCurrentMonthYear, true);
-        
-      } catch (error) {
-        console.log("Using localStorage data only:", error);
+    // Enhanced Appointment Action Handler
+    window.handleAppointmentAction = function(action, index) {
+      const appointment = appointments[index];
+      
+      switch(action) {
+        case 'edit':
+          showAppointmentEditModal(index);
+          break;
+          
+        case 'complete':
+          appointments[index].completed = true;
+          saveAppointments().then(() => {
+            renderAppointments();
+            alert(`Appointment with ${appointment.name} marked as completed! ✅`);
+          });
+          break;
+          
+        case 'incomplete':
+          appointments[index].completed = false;
+          saveAppointments().then(() => {
+            renderAppointments();
+            alert(`Appointment with ${appointment.name} marked as pending! 🔄`);
+          });
+          break;
+          
+        case 'delete':
+          if (confirm(`Are you sure you want to delete the appointment with ${appointment.name} on ${appointment.date} at ${appointment.time}?`)) {
+            appointments.splice(index, 1);
+            saveAppointments().then(() => {
+              renderAppointments();
+              alert('Appointment deleted successfully! 🗑️');
+            });
+          }
+          break;
       }
+    };
+
+    // Quick Edit Function for Simple Edits
+    window.quickEditAppointment = function(index) {
+      const appointment = appointments[index];
+      
+      const newDate = prompt('Enter new date (YYYY-MM-DD):', appointment.date);
+      if (newDate && newDate !== appointment.date) {
+        appointments[index].date = newDate;
+      }
+      
+      const newTime = prompt('Enter new time (HH:MM):', appointment.time);
+      if (newTime && newTime !== appointment.time) {
+        appointments[index].time = newTime;
+      }
+      
+      if (newDate || newTime) {
+        saveAppointments().then(() => {
+          renderAppointments();
+          alert('Appointment updated successfully! ✏️');
+        });
+      }
+    };
+
+    // Full Edit Modal for Detailed Editing
+    function showAppointmentEditModal(index) {
+      const appointment = appointments[index];
+      
+      // Create edit modal HTML
+      const editModalHTML = `
+        <div class="modal show" id="editAppointmentModal" style="display: flex;">
+          <div class="modal-content" style="max-width: 500px;">
+            <button class="close-modal" onclick="closeEditModal()">&times;</button>
+            <h3>✏️ Edit Appointment</h3>
+            
+            <form id="editAppointmentForm">
+              <label for="editName">Name:</label>
+              <input type="text" id="editName" value="${appointment.name}" required>
+              
+              <label for="editEmail">Email:</label>
+              <input type="email" id="editEmail" value="${appointment.email || ''}">
+              
+              <label for="editPhone">Phone:</label>
+              <input type="text" id="editPhone" value="${appointment.phone}" required>
+              
+              <label for="editDate">Date:</label>
+              <input type="date" id="editDate" value="${appointment.date}" required>
+              
+              <label for="editTime">Time:</label>
+              <input type="time" id="editTime" value="${appointment.time}" required>
+              
+              <label for="editReason">Reason:</label>
+              <input type="text" id="editReason" value="${appointment.reason}" required>
+              
+              <label for="editComments">Comments:</label>
+              <textarea id="editComments" rows="3">${appointment.comments || ''}</textarea>
+              
+              <div style="display: flex; gap: 10px; margin-top: 15px;">
+                <button type="submit" style="flex: 1; background: #28a745;">💾 Save Changes</button>
+                <button type="button" onclick="closeEditModal()" style="flex: 1; background: #6c757d;">❌ Cancel</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      `;
+      
+      // Add modal to body
+      const modalContainer = document.createElement('div');
+      modalContainer.innerHTML = editModalHTML;
+      document.body.appendChild(modalContainer);
+      
+      // Handle form submission
+      document.getElementById('editAppointmentForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        // Update appointment
+        appointments[index] = {
+          ...appointments[index],
+          name: document.getElementById('editName').value,
+          email: document.getElementById('editEmail').value,
+          phone: document.getElementById('editPhone').value,
+          date: document.getElementById('editDate').value,
+          time: document.getElementById('editTime').value,
+          reason: document.getElementById('editReason').value,
+          comments: document.getElementById('editComments').value
+        };
+        
+        saveAppointments().then(() => {
+          closeEditModal();
+          renderAppointments();
+          alert('Appointment updated successfully! ✏️');
+        });
+      });
     }
+
+    // Close edit modal
+    window.closeEditModal = function() {
+      const modal = document.getElementById('editAppointmentModal');
+      if (modal) {
+        modal.remove();
+      }
+    };
 
     // SIMPLIFIED: Save to both localStorage and Firestore
     async function saveBlockedDays() {
@@ -1656,28 +2011,6 @@
     // ---------------------------
     // RENDERING FUNCTIONS FOR LISTS
     // ---------------------------
-    function renderAppointments() {
-      appointmentsList.innerHTML = '';
-      if (appointments.length === 0) {
-        appointmentsList.innerHTML = '<li>No appointments.</li>';
-        return;
-      }
-      appointments.forEach((app, index) => {
-        const li = document.createElement('li');
-        li.classList.add('blocked-day-item');
-        li.innerHTML = `
-          <span>${app.date} ${app.time ? 'at ' + app.time : ''} - ${app.reason} (${app.name}) ${app.completed ? ' ✅' : ''}</span>
-          <select onchange="handleAction(this.value, 'appointments', ${index})">
-            <option value="">Actions</option>
-            <option value="complete">Complete</option>
-            <option value="edit">Edit</option>
-            <option value="delete">Delete</option>
-          </select>
-        `;
-        appointmentsList.appendChild(li);
-      });
-    }
-
     function renderEvents() {
       eventsList.innerHTML = '';
       if (events.length === 0) {
